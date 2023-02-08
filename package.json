@@ -2,11 +2,18 @@
   "name": "paper-tinymce",
   "private": false,
   "version": "0.1.3",
-  "main": "dist/paper-tinymce.js",
   "type": "module",
+  "main": "./paper-tinymce.umd.cjs",
+  "module": "./paper-tinymce.js",
+  "exports": {
+    ".": {
+      "import": "./paper-tinymce.js",
+      "require": "./paper-tinymce.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/paper-tinymce/dist/",
+    "build": "vite build",
     "test": "",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
