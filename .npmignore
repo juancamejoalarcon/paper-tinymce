@@ -1,0 +1,14 @@
+.vscode/*
+demo
+node_modules
+public
+src
+index.html
+package-lock.json
+package.json
+.gitignore
+README.md
+.svelte.config.js
+.tsconfig.json
+.tsconfig.node.json
+.vite.config.ts

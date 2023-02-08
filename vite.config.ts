@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [svelte()],
   build: {
     copyPublicDir: false,
+    outDir: '.',
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/plugin/PaperTinyMCE.ts'),
