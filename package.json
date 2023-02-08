@@ -1,7 +1,8 @@
 {
   "name": "paper-tinymce",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
+  "main": "dist/paper-tinymce.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
