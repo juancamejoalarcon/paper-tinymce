@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="https://juancamejoalarcon.github.io/paper-tinymce/public/tinymce/tinymce.min.js"
-    referrerpolicy="origin"></script>
+  <script src="../public/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="../paper-tinymce.umd.cjs" referrerpolicy="origin"></script>
 </head>
 
 <body>
@@ -342,8 +342,7 @@
     </p>
   </div>
 </body>
-<script type="module">
-  import { PaperTinyMCE } from 'https://juancamejoalarcon.github.io/paper-tinymce/dist/paper-tinymce.js'
+<script>
   tinymce.PluginManager.add("paper-tinymce", PaperTinyMCE);
   tinymce.init({
     selector: "#paper-editor-container",

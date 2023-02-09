@@ -24,3 +24,17 @@ export const PaperTinyMCE = (editor: Editor): void => {
     Zoom.setup(editor);
     // return api;
   };
+
+  const exportToModuleLoaders = PaperTinyMCE => {
+    if (typeof module === 'object') {
+      try {
+        module.exports = PaperTinyMCE;
+      } catch (_) {
+      }
+    }
+  };
+  const exportToWindowGlobal = PaperTinyMCE => {
+    (window as any).PaperTinyMCE = PaperTinyMCE;
+  };
+  exportToWindowGlobal(PaperTinyMCE);
+  exportToModuleLoaders(PaperTinyMCE);
