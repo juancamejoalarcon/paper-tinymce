@@ -10,11 +10,15 @@ export default defineConfig({
     copyPublicDir: false,
     outDir: '.',
     lib: {
-      // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/plugin/PaperTinyMCE.ts'),
       name: 'Paper TinyMCE',
-      // the proper extensions will be added
-      fileName: 'paper-tinymce',
+      fileName: (format, entryName) => {
+        if (format === 'umd') {
+          return 'paper-tinymce.umd.js'
+        } else {
+          return 'paper-tinymce.js'
+        }
+      },
     },
     // rollupOptions: {}
   },
