@@ -21,7 +21,7 @@ https://cdn.jsdelivr.net/npm/paper-tinymce@latest/paper-tinymce.umd.js
 
 ## Use
 
-```
+```js
   tinymce.PluginManager.add("paper-tinymce", PaperTinyMCE);
   tinymce.init({
     selector: "#paper-editor-container",
