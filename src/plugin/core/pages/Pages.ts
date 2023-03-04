@@ -36,6 +36,7 @@ const setInitialState = (editor: Editor): void => {
 
   const pagesEl = doc.createElement('div');
   pagesEl.classList.add('pages');
+  pagesEl.id = 'paper-tinymce-pages'
 
   const pagesContainerEl = doc.createElement('div');
   pagesContainerEl.classList.add('pages-container');
@@ -53,6 +54,7 @@ const getAllNodesInEditor = (editor: Editor): ChildNode[] => {
     setInitialState(editor)
     body.childNodes.forEach((node: ChildNode) => {
       if (node.constructor.name === 'Comment') return
+      if ((node as HTMLElement)?.id === 'paper-tinymce-pages') return
       nodes.push(node);
     });
   } else {
