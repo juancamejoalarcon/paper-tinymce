@@ -24,10 +24,13 @@
 
   const setZoomInContainer = (): void => {
 
-    rulerVertical.style.transform = `scale(1, ${1 + currentZoom})`;
-    rulerVertical.style.transformOrigin = 'top';
-    rulerHorizontal.style.transform = `scale(${1 + currentZoom}, 1)`;
-    rulerHorizontal.style.transformOrigin = 'left';
+    // rulerVertical.style.transform = `scale(1, ${1 + currentZoom})`;
+    // rulerVertical.style.transformOrigin = 'top';
+    
+    rulerHorizontal.style.width = `calc(100% * ${1 + currentZoom})`;
+    const horizontarRulerContent = rulerHorizontal.firstElementChild as HTMLDivElement;
+    horizontarRulerContent.style.width = `calc(21cm * ${1 + currentZoom})`;
+    // rulerHorizontal.style.transformOrigin = 'left';
   };
 
   onMount(() => {

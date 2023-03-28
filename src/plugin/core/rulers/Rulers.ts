@@ -27,6 +27,7 @@ const createRulers = (editor: Editor): void => {
     rulerVertical.$on('margin-changed', ({ detail: { value, side} }) => onMarginChanged(editor, true, side, value))
 
     editor.on('currentPageUpdate', ({ currentPage }) => rulerVertical.$set({ currentPage }));
+    editor.on('zoomUpdate', ({ zoom }) => rulerVertical.$set({ zoom }));
 
 }
 

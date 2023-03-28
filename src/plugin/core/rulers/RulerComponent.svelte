@@ -5,13 +5,15 @@
   // export let defaultMargin: Margins = { top: 0, left: 0, bottom: 0, right: 0 };
   export let vertical: boolean = false;
   export let currentPage: number = 0;
+  export let zoom: number = 0;
   export let win: Window;
 
   let rangeBackground = "white";
+  let verticalHeight = 0;
 
   $: verticalOffset =
     vertical && currentPage && currentPage !== 1
-      ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + 14 + "px"
+      ? (((currentPage - 1) * 1123 + (currentPage - 1) * 20 + 14) * (1 + zoom)) + "px"
       : "";
   $: markClass = "mark" + (vertical ? "-vertical" : "");
   $: {
@@ -25,6 +27,13 @@
       ${rangeColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
+  }
+  $: {
+    if (container && vertical) {
+      container.style.height = `calc(${verticalHeight}px * ${1 + zoom})`;
+      const content = container.firstElementChild as HTMLDivElement;
+      content.style.width = `calc(29.7cm * ${1 + zoom})`;
+    }
   }
 
   const numberOfPoints = 66;
@@ -88,6 +97,7 @@
         }
       })
   }
+  
 
   onMount(() => {
     // makeAllElementsNonEditable(container)
@@ -95,6 +105,7 @@
       const offset = 50
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
+          verticalHeight = entry.contentRect.height + offset
           container.style.height = (entry.contentRect.height + offset) + 'px'
         }
       });
