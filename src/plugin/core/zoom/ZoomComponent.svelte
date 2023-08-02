@@ -54,3 +54,6 @@
     >
   </div>
 </div>
+<style lang="scss">
+  @import "./ZoomComponent.scss";
+</style>

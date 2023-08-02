@@ -5,21 +5,19 @@ import * as Rulers from "./core/rulers/Rulers";
 import * as Zoom from "./core/zoom/Zoom";
 import * as css from "../assets/paper_styles.css?inline";
 import * as rulerCss from "./core/rulers/RulerComponent.scss?inline";
-import * as zoomCss from "./core/zoom/ZoomComponent.scss?inline";
 import ImportDocx from "./core/import/ImportDocx";
 
 export const PaperTinyMCE = {
   init: (editor: Editor): void => {
-    // parseGeneralStyles(editor);
     const api = Api.get();
     Pages.setup(editor, api, 100);
     // Rulers.setup(editor);
-    // Zoom.setup(editor);
-    // return api;
+    Zoom.setup(editor);
     ImportDocx.init(editor)
+    // return api;
   },
   getStyles: () => {
-    return css.default + rulerCss.default + zoomCss.default;
+    return css.default + rulerCss.default;
   },
 };
 
