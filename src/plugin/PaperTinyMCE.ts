@@ -6,16 +6,7 @@ import * as Zoom from "./core/zoom/Zoom";
 import * as css from "../assets/paper_styles.css?inline";
 import * as rulerCss from "./core/rulers/RulerComponent.scss?inline";
 import * as zoomCss from "./core/zoom/ZoomComponent.scss?inline";
-
-const parseGeneralStyles = (editor: Editor): void => {
-  editor.on("init", () => {
-    // const doc = editor.contentDocument;
-    // const styleElement = doc.createElement("style");
-    // styleElement.textContent = css.default + rulerCss.default + zoomCss.default;
-    // doc.body.appendChild(styleElement);
-  });
-};
-
+import ImportDocx from "./core/import/ImportDocx";
 
 export const PaperTinyMCE = {
   init: (editor: Editor): void => {
@@ -25,6 +16,7 @@ export const PaperTinyMCE = {
     // Rulers.setup(editor);
     // Zoom.setup(editor);
     // return api;
+    ImportDocx.init(editor)
   },
   getStyles: () => {
     return css.default + rulerCss.default + zoomCss.default;
