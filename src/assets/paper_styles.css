@@ -1,5 +1,9 @@
 body {
   background-color: #F8F9FA;
+  overflow: auto;
+  position: relative;
+  margin: 0;
+  padding: 0;
   /* position: relative; */
 }
 
@@ -21,6 +25,10 @@ h1 {
 
 h3, p {
     padding: 1em 0em;
+}
+
+.pages {
+  padding-bottom: 10px;
 }
 
 

@@ -23,6 +23,7 @@ let doc: Document;
 let editor: Editor;
 
 let pagesContainer: HTMLDivElement;
+let pagesEl: HTMLDivElement;
 let allPages: HTMLDivElement[] = [];
 
 export const pagesCounter = (): number => {
@@ -38,7 +39,7 @@ const setInitialState = (editor: Editor): void => {
   doc = editor.contentDocument;
   editor = editor;
 
-  const pagesEl = doc.createElement("div");
+  pagesEl = doc.createElement("div");
   pagesEl.classList.add("pages");
   pagesEl.id = "paper-tinymce-pages";
 
@@ -219,8 +220,8 @@ const doubleUpdate = (editor: Editor, api: PagesApi) => {
 
 const zoomListener = (editor: Editor) => {
   editor.on("zoomUpdate", ({ zoom }) => {
-    pagesContainer.style.transformOrigin = "top left";
-    pagesContainer.style.transform = `scale(${1 + zoom})`;
+    pagesEl.style.transformOrigin = "0 0";
+    pagesEl.style.transform = `scale(${1 + zoom})`;
   });
 };
 

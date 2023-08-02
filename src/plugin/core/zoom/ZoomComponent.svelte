@@ -19,7 +19,7 @@
       currentZoom = currentZoom - 0.25;
     }
     dispatch("zoom", { zoom: currentZoom });
-    setZoomInContainer();
+    // setZoomInContainer();
   };
 
   const setZoomInContainer = (): void => {
