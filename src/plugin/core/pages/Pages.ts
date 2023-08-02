@@ -160,6 +160,7 @@ const orderPages = (): void => {
 };
 
 const setPagesInEditor = (editor: Editor): void => {
+
   // Save selection to reapply
   const nodeBeforePaging = editor.selection.getRng().commonAncestorContainer;
   const offset = editor.selection.getRng().startOffset;
@@ -173,7 +174,7 @@ const setPagesInEditor = (editor: Editor): void => {
   hideEmptyPages(editor);
 
   inited = true
-  // Reapply selection
+  // Reapply selectione
   editor.selection.setCursorLocation(nodeBeforePaging, offset);
 };
 
@@ -231,8 +232,13 @@ const setup = (editor: Editor, api: PagesApi, delay: number): void => {
     setTimeout(() => {
       doubleUpdate(editor, api)
 
-      editor.on('SetContent BeforeAddUndo Undo Redo ViewUpdate keyup', debouncedUpdate.throttle);
-
+      editor.on('SetContent Undo Redo ViewUpdate', debouncedUpdate.throttle);
+      editor.on('keyup', (e) => {
+        // 91 is the command key on mac (cmd) and 17 is the control key on windows (ctrl)
+        // should not update on those keys
+        if (e.keyCode === 91 || e.keyCode === 17) return
+        debouncedUpdate.throttle()
+      });
       editor.on('SelectionChange', () => setCurrentPage(editor));
 
 

@@ -9,32 +9,37 @@ import * as zoomCss from "./core/zoom/ZoomComponent.scss?inline";
 
 const parseGeneralStyles = (editor: Editor): void => {
   editor.on("init", () => {
-    const doc = editor.contentDocument;
-    const styleElement = doc.createElement("style");
-    styleElement.textContent = css.default + rulerCss.default + zoomCss.default;
-    doc.body.appendChild(styleElement);
+    // const doc = editor.contentDocument;
+    // const styleElement = doc.createElement("style");
+    // styleElement.textContent = css.default + rulerCss.default + zoomCss.default;
+    // doc.body.appendChild(styleElement);
   });
 };
 
-export const PaperTinyMCE = (editor: Editor): void => {
-    parseGeneralStyles(editor);
+
+export const PaperTinyMCE = {
+  init: (editor: Editor): void => {
+    // parseGeneralStyles(editor);
     const api = Api.get();
     Pages.setup(editor, api, 100);
-    Rulers.setup(editor);
-    Zoom.setup(editor);
+    // Rulers.setup(editor);
+    // Zoom.setup(editor);
     // return api;
-  };
+  },
+  getStyles: () => {
+    return css.default + rulerCss.default + zoomCss.default;
+  },
+};
 
-  const exportToModuleLoaders = PaperTinyMCE => {
-    if (typeof module === 'object') {
-      try {
-        module.exports = PaperTinyMCE;
-      } catch (_) {
-      }
-    }
-  };
-  const exportToWindowGlobal = PaperTinyMCE => {
-    (window as any).PaperTinyMCE = PaperTinyMCE;
-  };
-  exportToWindowGlobal(PaperTinyMCE);
-  exportToModuleLoaders(PaperTinyMCE);
+const exportToModuleLoaders = (PaperTinyMCE) => {
+  if (typeof module === "object") {
+    try {
+      module.exports = PaperTinyMCE;
+    } catch (_) {}
+  }
+};
+const exportToWindowGlobal = (PaperTinyMCE) => {
+  (window as any).PaperTinyMCE = PaperTinyMCE;
+};
+exportToWindowGlobal(PaperTinyMCE);
+exportToModuleLoaders(PaperTinyMCE);
