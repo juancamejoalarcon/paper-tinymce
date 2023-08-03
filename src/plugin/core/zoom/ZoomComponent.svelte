@@ -19,21 +19,23 @@
       currentZoom = currentZoom - 0.25;
     }
     dispatch("zoom", { zoom: currentZoom });
-    // setZoomInContainer();
+    setZoomInContainer();
   };
 
   const setZoomInContainer = (): void => {
 
-    rulerVertical.style.transform = `scale(1, ${1 + currentZoom})`;
-    rulerVertical.style.transformOrigin = 'top';
+    // rulerVertical.style.transform = `scale(1, ${1 + currentZoom})`;
+    // rulerVertical.style.transformOrigin = 'top';
+    const rulerVerticalContent = rulerVertical.firstElementChild as HTMLDivElement;
+    rulerVerticalContent.style.width = (29.7 * (1 + currentZoom)) + 'cm'
+
     rulerHorizontal.style.transform = `scale(${1 + currentZoom}, 1)`;
     rulerHorizontal.style.transformOrigin = 'left';
   };
 
   onMount(() => {
-    const contentDoc = editor.contentDocument;
-    rulerVertical = contentDoc.querySelector(".ruler.vertical");
-    rulerHorizontal = contentDoc.querySelector(".ruler");
+    rulerVertical = document.querySelector(".ruler.vertical");
+    rulerHorizontal = document.querySelector(".ruler");
 
     makeAllElementsNonEditable(container)
   });

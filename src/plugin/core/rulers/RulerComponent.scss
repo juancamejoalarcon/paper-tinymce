@@ -7,6 +7,7 @@
     margin-top: 18px;
     background-color: #4285f4;
     position: absolute;
+    z-index: 99;
   }
 }
 .mark-vertical {
@@ -23,7 +24,7 @@
   }
 }
 .ruler {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

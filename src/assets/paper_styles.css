@@ -1,5 +1,5 @@
 body {
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   overflow: auto;
   position: relative;
   margin: 0;
@@ -23,14 +23,14 @@ h1 {
   padding-bottom: 0.67em;
 }
 
-h3, p {
-    padding: 1em 0em;
+h3,
+p {
+  padding: 1em 0em;
 }
 
 .pages {
   padding-bottom: 10px;
 }
-
 
 #page-1 {
   margin-top: 3rem !important;

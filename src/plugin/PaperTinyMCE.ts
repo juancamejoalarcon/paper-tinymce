@@ -11,7 +11,7 @@ export const PaperTinyMCE = {
   init: (editor: Editor): void => {
     const api = Api.get();
     Pages.setup(editor, api, 100);
-    // Rulers.setup(editor);
+    Rulers.setup(editor);
     Zoom.setup(editor);
     ImportDocx.init(editor)
     // return api;

@@ -12,8 +12,9 @@ const onMarginChanged = (editor: Editor, vertical: boolean, side: string, value:
 }
 
 const getOpts = (editor: Editor, vertical: boolean) => {
-    const body = editor.getBody();
-    return { target: body, props: { defaultMargin: currentMargin, vertical, currentPage: 0, win: editor.iframeElement.contentWindow   } }
+    const divEl = document.createElement('div')
+    document.querySelector('.tox-edit-area').appendChild(divEl)
+    return { target: divEl, props: { defaultMargin: currentMargin, vertical, currentPage: 0, win: editor.iframeElement.contentWindow   } }
 }
 
 const createRulers = (editor: Editor): void => {
@@ -21,12 +22,13 @@ const createRulers = (editor: Editor): void => {
     const rulerHorizontal = new RulerComponent(getOpts(editor, false))
     rulerHorizontal.$on('margin-changed', ({ detail: { value, side} }) => onMarginChanged(editor, false, side, value))
 
-    
 
     const rulerVertical = new RulerComponent(getOpts(editor, true))
     rulerVertical.$on('margin-changed', ({ detail: { value, side} }) => onMarginChanged(editor, true, side, value))
 
     editor.on('currentPageUpdate', ({ currentPage }) => rulerVertical.$set({ currentPage }));
+
+    editor.on('zoomUpdate', ({ zoom }) => rulerVertical.$set({ currentZoom: zoom }))
 
 }
 
