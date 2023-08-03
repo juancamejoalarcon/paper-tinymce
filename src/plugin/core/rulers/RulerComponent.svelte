@@ -156,7 +156,6 @@
   </div>
 </div>
 <style lang="scss">
-  @import "./RulerComponent.scss";
 </style>
 
 

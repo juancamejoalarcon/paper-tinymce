@@ -3,7 +3,7 @@
   import type { Editor } from "tinymce";
   import { makeAllElementsNonEditable } from "../shared/utils"
 
-  export let editor: Editor;
+  // export let editor: Editor;
 
   let rulerVertical: HTMLDivElement;
   let rulerHorizontal: HTMLDivElement;
@@ -57,5 +57,4 @@
   </div>
 </div>
 <style lang="scss">
-  @import "./ZoomComponent.scss";
 </style>
