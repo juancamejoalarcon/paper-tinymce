@@ -3,8 +3,9 @@ import * as Events from '../../api/Events';
 import ZoomComponent from './ZoomComponent.svelte'
 
 const createZoom = (editor: Editor): void => {
-    const body = editor.getBody()
-    const zoom = new ZoomComponent({ target: body, props: { editor } })
+    const divEl = document.createElement('div')
+    document.querySelector('.tox-edit-area').appendChild(divEl)
+    const zoom = new ZoomComponent({ target: divEl, props: { editor } })
     zoom.$on('zoom', ({ detail: { zoom } }) => {
         Events.fireZoomUpdate(editor, zoom)
     })

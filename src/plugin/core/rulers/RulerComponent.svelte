@@ -5,14 +5,23 @@
   // export let defaultMargin: Margins = { top: 0, left: 0, bottom: 0, right: 0 };
   export let vertical: boolean = false;
   export let currentPage: number = 0;
+  export let currentZoom: number = 0;
   export let win: Window;
 
   let rangeBackground = "white";
+  let verticalOffset: string;
+  let zoom: number = 1;
 
-  $: verticalOffset =
-    vertical && currentPage && currentPage !== 1
-      ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + 14 + "px"
+  $: {
+    if (vertical) {
+      zoom = 1 + currentZoom
+      verticalOffset = vertical && currentPage && currentPage !== 1
+      ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + "px"
       : "";
+      setVerticalMarginTop()
+    }
+  }
+
   $: markClass = "mark" + (vertical ? "-vertical" : "");
   $: {
     const inputColor = "#E8EAED";
@@ -62,9 +71,9 @@
     toggleRulerMark(control);
     const removeMark = () => {
       toggleRulerMark(control, false);
-      win.removeEventListener("mouseup", removeMark);
+      window.removeEventListener("mouseup", removeMark);
     };
-    win.addEventListener("mouseup", removeMark);
+    window.addEventListener("mouseup", removeMark);
   };
 
   const hideMark = () => {
@@ -78,13 +87,20 @@
     toggleRulerMark(control);
   };
 
+  const setVerticalMarginTop = () => {
+    const contentVertical = container?.firstElementChild as HTMLElement
+    const offset = 16 + (verticalOffset ? parseInt(verticalOffset) : 0);
+          const margin = (-1 * (win.scrollY)) + (offset * zoom);
+          if (contentVertical) contentVertical.style.marginTop = `${margin}px`
+  }
+
   const onScrollListener = (): void => {
 
       win.addEventListener('scroll', () => {
         if (!vertical) {
           container.style.marginLeft = '-' + win.scrollX + 'px'
         } else {
-          container.style.marginLeft = win.scrollX + 'px'
+          setVerticalMarginTop()
         }
       })
   }
@@ -105,7 +121,7 @@
 </script>
 
 <div bind:this={container} class="ruler" class:vertical>
-  <div class="content" style="margin-top: {verticalOffset};">
+  <div class="content" >
     <div class="controls">
       <div class="controls-container">
         <input
@@ -139,4 +155,8 @@
     </ul>
   </div>
 </div>
+<style lang="scss">
+  @import "./RulerComponent.scss";
+</style>
+
 
