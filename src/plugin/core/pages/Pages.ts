@@ -33,6 +33,7 @@ const setup = (editor: Editor, api: PagesApi, delay: number): void => {
       editor.on("SetContent", () => {
         PageClass.resetToBeforeInitalState();
         setPages(editor, api)
+        PageClass.applyZoom(PageClass.currentZoom)
       });
 
       editor.on("SelectionChange", () => {

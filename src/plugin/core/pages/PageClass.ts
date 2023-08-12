@@ -30,6 +30,7 @@ class Pages {
   currentMargins = DefaultMargins;
   widthPoint = A4Dimensions.widthInPixes / rulerWidthNumberOfPoints;
   heightPoint = A4Dimensions.heightInPixels / rulerHeightNumberOfPoints;
+  currentZoom = 0
 
   constructor() {}
 
@@ -239,6 +240,7 @@ class Pages {
       this.root.style.left = '0'
     }
     this.root.style.transform = `scale(${1 + zoom})`;
+    this.currentZoom = zoom
 
   }
 
