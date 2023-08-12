@@ -36,3 +36,6 @@ export const getOuterHeightOfElement = (element: HTMLElement): number => {
 
   return [ 'top', 'bottom' ].map((side: any) => parseInt(style[`margin-${side}` as any])).reduce((total, side) => total + side, height);
 };
+
+export const rulerWidthNumberOfPoints = 66;
+export const rulerHeightNumberOfPoints = 66;
