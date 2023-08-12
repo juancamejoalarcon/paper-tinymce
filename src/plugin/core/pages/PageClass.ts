@@ -231,7 +231,15 @@ class Pages {
 
   applyZoom(zoom: number) {
     this.root.style.transformOrigin = "0 0";
+    if (zoom < 0) {
+      const zoomAbsolute = Math.abs(zoom) * 100
+      this.root.style.left = (zoomAbsolute / 2) + '%'
+      this.root.style.position = 'relative'
+    } else {
+      this.root.style.left = '0'
+    }
     this.root.style.transform = `scale(${1 + zoom})`;
+
   }
 
   setCurrentMargins(margins: any) {

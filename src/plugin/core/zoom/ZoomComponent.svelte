@@ -29,8 +29,16 @@
     const rulerVerticalContent = rulerVertical.firstElementChild as HTMLDivElement;
     rulerVerticalContent.style.width = (29.7 * (1 + currentZoom)) + 'cm'
 
-    rulerHorizontal.style.transform = `scale(${1 + currentZoom}, 1)`;
-    rulerHorizontal.style.transformOrigin = 'left';
+    const rulerHorizontalContent = rulerHorizontal.firstElementChild as HTMLDivElement;
+
+    if (currentZoom < 0) {
+      rulerHorizontalContent.style.transform = `scale(${1 + currentZoom}, 1)`;
+      rulerHorizontal.style.transform = 'none'
+    } else {
+      rulerHorizontal.style.transform = `scale(${1 + currentZoom}, 1)`;
+      rulerHorizontal.style.transformOrigin = 'left';
+      rulerHorizontalContent.style.transform = 'none'
+    }
   };
 
   onMount(() => {
