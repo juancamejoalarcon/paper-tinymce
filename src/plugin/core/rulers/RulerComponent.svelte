@@ -9,6 +9,7 @@
   export let win: Window;
 
   let rangeBackground = "white";
+  let globalRangeBackground = "white";
   let verticalOffset: string;
   let zoom: number = 1;
 
@@ -34,37 +35,84 @@
       ${rangeColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
+    globalRangeBackground = `linear-gradient(
+      to right,
+      ${inputColor} 0%,
+      ${inputColor} ${(globalStartValue / numberOfPoints) * 100}%,
+      ${rangeColor} ${(globalStartValue / numberOfPoints) * 100}%,
+      ${rangeColor} ${(globalEndValue / numberOfPoints) * 100}%, 
+      ${inputColor} ${(globalEndValue / numberOfPoints) * 100}%, 
+      ${inputColor} 100%)`;
+      
   }
 
   const numberOfPoints = 66;
   const ruler: number[] = Array.from(Array(numberOfPoints + 2).keys());
 
+  let globalRightMarginInput: HTMLInputElement;
   let rightMarginInput: HTMLInputElement;
   let rulerMarks: HTMLUListElement;
   let container: HTMLDivElement;
 
-  let startValue = 0;
-  let endValue = numberOfPoints;
+  export let startValue = 0;
+  export let endValue = numberOfPoints;
+  export let indentValue = 0;
+
+  export let globalStartValue = 0;
+  export let globalEndValue = numberOfPoints;
 
   const dispatch = createEventDispatcher();
 
   const onControlChanged = (side: string): void => {
+    let value: number;
+
     if (side === "start" && startValue > endValue) {
       startValue = endValue;
-    } else {
+    }
+    if (side === "end") {
       endValue = startValue <= endValue ? endValue : startValue;
     }
 
+    if (side === "global-start" && globalStartValue > globalEndValue) {
+      globalStartValue = globalEndValue;
+    }
+
+    if (side === "global-end") {
+      globalEndValue = globalStartValue <= globalEndValue ? globalEndValue : globalStartValue;
+    }
+
+
+
+    if (side === "start") value = startValue - globalStartValue
+    if (side === "end") {
+      value = (!vertical ? globalEndValue : numberOfPoints) - (endValue)
+    }
+    if (side === "global-start") value = globalStartValue 
+    if (side === "global-end") value = numberOfPoints - globalEndValue 
+    
+
     dispatch("margin-changed", {
       side,
-      value: side === "start" ? startValue : numberOfPoints - endValue,
+      value,
     });
   };
 
+  const onIndentChange = () => {
+    dispatch("indent-changed", {
+      value: indentValue - globalStartValue,
+    });
+  }
+
   const toggleRulerMark = (control: string, add = true) => {
-    rulerMarks.children[
-      control === "start" ? startValue : endValue + 1
-    ].classList[add ? "add" : "remove"](markClass);
+    let value: number;
+
+    if (control === "start") value = startValue
+    if (control === "end") value = endValue + 1
+    if (control === "global-start") value = globalStartValue
+    if (control === "global-end") value = globalEndValue + 1
+    if (control === "indent") value = indentValue
+
+    rulerMarks.children[value].classList[add ? "add" : "remove"](markClass);
   };
 
   const toggleRulerMarkAndListener = (control: string) => {
@@ -124,6 +172,40 @@
   <div class="content" >
     <div class="controls">
       <div class="controls-container">
+        {#if !vertical}
+          <input
+            bind:value={indentValue}
+            on:change={() => onIndentChange()}
+            on:input={() => onRangePointMove("indent")}
+            on:mousedown={() => toggleRulerMarkAndListener("indent")}
+            class="indent"
+            type="range"
+            min="0"
+            max={numberOfPoints}
+          />
+          <input
+            bind:value={globalStartValue}
+            on:change={() => onControlChanged("global-start")}
+            on:input={() => onRangePointMove("global-start")}
+            on:mousedown={() => toggleRulerMarkAndListener("global-start")}
+            class="global-start"
+            type="range"
+            min="0"
+            max={numberOfPoints}
+          />
+          <input
+            bind:this={globalRightMarginInput}
+            bind:value={globalEndValue}
+            on:change={() => onControlChanged("global-end")}
+            on:input={() => onRangePointMove("global-end")}
+            on:mousedown={() => toggleRulerMarkAndListener("global-end")}
+            class="global-end"
+            type="range"
+            style="background: {globalRangeBackground};"
+            min="0"
+            max={numberOfPoints}
+          />
+        {/if}
         <input
           bind:value={startValue}
           on:change={() => onControlChanged("start")}
@@ -142,7 +224,7 @@
           on:mousedown={() => toggleRulerMarkAndListener("end")}
           class="end"
           type="range"
-          style="background: {rangeBackground};"
+          style="background: {vertical ? rangeBackground : 'white'};"
           min="0"
           max={numberOfPoints}
         />
