@@ -13,6 +13,10 @@
   let globalRangeBackground = "white";
   let verticalOffset: string;
   let zoom: number = 1;
+  let marginTopOfStartRange = ''
+  let marginTopOfEndRange = ''
+  let marginTopOfControl = ''
+  let controlsWidth = 'auto'
 
   $: {
     if (vertical) {
@@ -21,6 +25,11 @@
       ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + "px"
       : "";
       setVerticalMarginTop()
+
+      marginTopOfStartRange = vertical ? `${-5 + (0.1 * startValue)}px` : '';
+      marginTopOfEndRange = vertical ? `${5 - (0.1 * (numberOfPoints - endValue))}px` : '';
+      marginTopOfControl = vertical ? `-${startValue * 0.24}px` : ''
+      controlsWidth = vertical ? `${100.4 + ((0.02 * startValue) + (0.03 * (numberOfPoints - endValue)))}%` : 'auto'
     }
   }
 
@@ -28,6 +37,7 @@
   $: {
     const inputColor = "#E8EAED";
     const rangeColor = "white";
+    const verticalOffset = vertical ? ((endValue - startValue) / 0.5) : 0
     rangeBackground = `linear-gradient(
       to right,
       ${inputColor} 0%,
@@ -66,6 +76,12 @@
 
   const onControlChanged = (side: string): void => {
     let value: number;
+
+    const startLimit = (numberOfPoints / 2) - 10
+    const endLimit = (numberOfPoints / 2) + 10
+    
+    if (startValue > startLimit) startValue = startLimit
+    if (endValue < endLimit) endValue = endLimit
 
     if (side === "start" && startValue > endValue) {
       startValue = endValue;
@@ -139,8 +155,11 @@
   const setVerticalMarginTop = () => {
     const contentVertical = container?.firstElementChild as HTMLElement
     const offset = 16 + (verticalOffset ? parseInt(verticalOffset) : 0);
-          const margin = (-1 * (win.scrollY)) + (offset * zoom);
-          if (contentVertical) contentVertical.style.marginTop = `${margin}px`
+    const margin = (-1.0004 * (win.scrollY)) + (offset * zoom);
+    let correction = margin;
+    if (zoom < 1) correction = margin + (4  / zoom)
+    else if (zoom > 1) correction = margin - (5  / zoom)
+    if (contentVertical) contentVertical.style.marginTop = `${correction}px`
   }
 
   const onScrollListener = (): void => {
@@ -171,7 +190,7 @@
 
 <div bind:this={container} class="ruler" class:vertical>
   <div class="content" >
-    <div class="controls">
+    <div class="controls" style:margin-left="{marginTopOfControl}" style:width="{controlsWidth}">
       <div class="controls-container">
         {#if !vertical}
           <input
@@ -216,6 +235,7 @@
           type="range"
           min="0"
           max={numberOfPoints}
+          style:--thumbMarginLeftStart="{marginTopOfStartRange}"
         />
         <input
           bind:this={rightMarginInput}
@@ -228,6 +248,7 @@
           style="background: {vertical ? rangeBackground : 'white'};"
           min="0"
           max={numberOfPoints}
+          style:--thumbMarginLeftEnd="{marginTopOfEndRange}"
         />
       </div>
     </div>

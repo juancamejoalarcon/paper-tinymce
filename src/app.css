@@ -49,11 +49,11 @@ p {
 .mark-vertical::after {
   content: "";
   height: 100vw;
-  width: 1px;
+  width: 2px;
   top: 0;
   margin-top: 23px;
   background-color: #4285f4;
   position: absolute;
   margin-top: -100vw;
-  margin-left: 1px;
+  /* margin-left: 1px; */
 }

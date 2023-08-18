@@ -1,6 +1,6 @@
 import type { Editor } from 'tinymce';
 
-import { setPagesInEditor, pagesCounter } from '../core/pages/Pages';
+import { setPagesInEditor, pagesCounter } from '../../components/pages/Pages';
 
 export interface PagesApi {
   readonly setPages: (editor: Editor) => void;

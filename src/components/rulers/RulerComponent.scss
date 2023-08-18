@@ -22,12 +22,28 @@
       transform-origin: left;
       margin-left: 10px;
       margin-top: 16px;
+      .controls {
+        width: 100.4%;
+      }
     }
     input[type="range"] {
+      --thumbMarginLeftStart: -1px;
+      --thumbMarginLeftEnd: -1px;
       &::-webkit-slider-thumb {
         transform: rotate(45deg);
         margin-top: -2px;
       }
+      &.start {
+        &::-webkit-slider-thumb {
+          margin-left: var(--thumbMarginLeftStart) !important;
+        }
+      }
+      &.end {
+        &::-webkit-slider-thumb {
+          margin-left: var(--thumbMarginLeftEnd) !important;
+        }
+      }
+
     }
   }
 

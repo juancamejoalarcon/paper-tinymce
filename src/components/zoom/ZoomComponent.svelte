@@ -13,8 +13,10 @@
 
   const zoom = (direction: string): void => {
     if (direction === "in") {
+      if (currentZoom === 0.5) return
       currentZoom = currentZoom + 0.25;
     } else {
+      if (currentZoom === -0.5) return
       currentZoom = currentZoom - 0.25;
     }
     dispatch("zoom", { zoom: currentZoom });
