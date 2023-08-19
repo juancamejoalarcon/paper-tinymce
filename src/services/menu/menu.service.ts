@@ -1,6 +1,6 @@
 import type { Editor } from "tinymce";
 import { getBasicMenuConfig } from "./basic-menu-config";
-import { onClickImportButton } from '../import.service'
+import { onClickImportButton } from '../import/import.service'
 
 export const registerImportButton = (editor: Editor) => {
   editor.ui.registry.addToggleMenuItem("importdocx", {

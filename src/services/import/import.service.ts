@@ -1,9 +1,28 @@
 import type { Editor } from "tinymce";
 import mammoth from "mammoth";
+import { getGlobalSettings } from './global-settings'
+import * as Events from '../../plugin//api/Events';
+
+function transformElement(element) {
+  if (element.children) {
+    element.children.forEach(element => {
+      if (element.indent && element.indent.start) {
+        console.log('-----')
+        console.log(element)
+        console.log('-----')
+      }
+    });
+}
+  return element;
+}
+
+const options = {
+  transformDocument: transformElement
+};
 
 export const transformDocxToHtml = (arrayBuffer: ArrayBuffer) => {
     return new Promise((resolve, reject) => {
-        mammoth.convertToHtml({ arrayBuffer }).then(
+        mammoth.convertToHtml({ arrayBuffer }, options).then(
             (result) => {
                 resolve(result.value)
             },
@@ -34,10 +53,19 @@ export const onClickImportButton = (editor: Editor) => {
       const reader = new FileReader();
 
       reader.onload = (loadEvent) => {
-        const arrayBuffer = loadEvent.target.result as ArrayBuffer;
-        transformDocxToHtml(arrayBuffer)
+        const arrayBuffer = loadEvent.target.result;
+
+
+        transformDocxToHtml(arrayBuffer as any)
         .then((result: string) => {
             editor.setContent(result);
+            getGlobalSettings(arrayBuffer as ArrayBuffer)
+            .then((globalSettings: any) => {
+              console.log('----')
+              console.log(globalSettings)
+              console.log('----')
+              Events.fireMarginRulerUpdate(editor, globalSettings.margins)
+            })
         }).catch((error: any) => {
             console.error(error)
         })
