@@ -17,6 +17,8 @@
   let marginTopOfEndRange = ''
   let marginTopOfControl = ''
   let controlsWidth = 'auto'
+  let marginLeftOfGlobalStartRange = ''
+  let marginLeftOfGlobalEndRange = ''
 
   $: {
     if (vertical) {
@@ -30,6 +32,11 @@
       marginTopOfEndRange = vertical ? `${5 - (0.1 * (numberOfPoints - endValue))}px` : '';
       marginTopOfControl = vertical ? `-${startValue * 0.24}px` : ''
       controlsWidth = vertical ? `${100.4 + ((0.02 * startValue) + (0.03 * (numberOfPoints - endValue)))}%` : 'auto'
+
+    } else {
+      marginLeftOfGlobalStartRange = `${-48 + (0.6 * globalStartValue)}px`
+      const end = (numberOfPoints - globalEndValue)
+      marginLeftOfGlobalEndRange = `${end !== 0 ? 52 - (0.6 * (numberOfPoints - globalEndValue)) : 50}px`
     }
   }
 
@@ -37,7 +44,6 @@
   $: {
     const inputColor = "#E8EAED";
     const rangeColor = "white";
-    const verticalOffset = vertical ? ((endValue - startValue) / 0.5) : 0
     rangeBackground = `linear-gradient(
       to right,
       ${inputColor} 0%,
@@ -46,12 +52,17 @@
       ${rangeColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
+
+
+    const startOffset = globalStartValue >= 5 ? globalStartValue * 0.04 : 0.6
+    const globalEnd = (numberOfPoints - globalEndValue)
+    const endOffset = globalEnd >= 5 ? globalEnd * 0.04 : 0.6
     globalRangeBackground = `linear-gradient(
       to right,
       ${inputColor} 0%,
-      ${inputColor} ${(globalStartValue / numberOfPoints) * 100}%,
+      ${inputColor} ${((globalStartValue / numberOfPoints) * 100) - startOffset}%,
       ${rangeColor} ${(globalStartValue / numberOfPoints) * 100}%,
-      ${rangeColor} ${(globalEndValue / numberOfPoints) * 100}%, 
+      ${rangeColor} ${((globalEndValue / numberOfPoints) * 100) + endOffset}%, 
       ${inputColor} ${(globalEndValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
       
@@ -79,15 +90,18 @@
 
     const startLimit = (numberOfPoints / 2) - 10
     const endLimit = (numberOfPoints / 2) + 10
-    
+
     if (startValue > startLimit) startValue = startLimit
     if (endValue < endLimit) endValue = endLimit
 
-    if (side === "start" && startValue > endValue) {
-      startValue = endValue;
+    if (globalStartValue > startLimit) globalStartValue = startLimit
+    if (globalEndValue < endLimit) globalEndValue = endLimit
+
+    if (side === "start" && startValue < globalStartValue) {
+      startValue = globalStartValue;
     }
-    if (side === "end") {
-      endValue = startValue <= endValue ? endValue : startValue;
+    if (side === "end" && endValue > globalEndValue) {
+      endValue = globalEndValue
     }
 
     if (side === "global-start" && globalStartValue > globalEndValue) {
@@ -212,6 +226,7 @@
             type="range"
             min="0"
             max={numberOfPoints}
+            style:--thumbMarginLeftGlobalStart="{marginLeftOfGlobalStartRange}"
           />
           <input
             bind:this={globalRightMarginInput}
@@ -224,6 +239,8 @@
             style="background: {globalRangeBackground};"
             min="0"
             max={numberOfPoints}
+            style:--thumbMarginLeftGlobalEnd="{marginLeftOfGlobalEndRange}"
+            style:margin-left="{((numberOfPoints - globalEndValue) === 0 ? '2px' : '' )}"
           />
         {/if}
         <input
@@ -245,7 +262,7 @@
           on:mousedown={() => toggleRulerMarkAndListener("end")}
           class="end"
           type="range"
-          style="background: {vertical ? rangeBackground : 'white'};"
+          style="background: {vertical ? rangeBackground : 'transparent'};"
           min="0"
           max={numberOfPoints}
           style:--thumbMarginLeftEnd="{marginTopOfEndRange}"
