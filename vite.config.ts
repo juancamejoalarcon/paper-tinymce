@@ -5,6 +5,11 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 // https://vitejs.dev/config/
 export default defineConfig({
   // base: '/paper-tinymce/dist/',
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
   plugins: [svelte()],
   build: {
     copyPublicDir: false,
@@ -23,3 +28,4 @@ export default defineConfig({
     // rollupOptions: {}
   },
 })
+

@@ -1,12 +1,4 @@
-export const makeAllElementsNonEditable = (container: HTMLElement) => {
-  const setUndeditable = (el: HTMLElement) => {
-    el.setAttribute("contenteditable", "false");
-    el.style.cursor = "default";
-    el.style.outline = "none";
-  }
-  setUndeditable(container)
-  container.querySelectorAll("*").forEach((el: HTMLElement) => setUndeditable(el));
-};
+
 
 export const A4Dimensions = {
   width: '21cm',

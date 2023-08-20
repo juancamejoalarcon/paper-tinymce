@@ -46,8 +46,8 @@ const setup = (editor: Editor, api: PagesApi, delay: number): void => {
 
     copyEventListener(editor);
 
-    editor.on("zoomUpdate", ({ zoom }) => PageClass.applyZoom(zoom));
-    editor.on("marginRulerUpdate", (event) => {
+    editor.on("zoom-updated", ({ zoom }) => PageClass.applyZoom(zoom));
+    editor.on("margins-changed", (event) => {
       PageClass.setCurrentMargins(event.margins);
       doubleUpdate(editor, api);
     });

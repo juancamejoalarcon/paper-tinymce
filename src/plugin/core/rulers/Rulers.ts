@@ -113,7 +113,7 @@ const createRulers = (editor: Editor): void => {
 
     editor.on('currentPageUpdate', ({ currentPage }) => rulerVertical.$set({ currentPage }));
 
-    editor.on('zoomUpdate', ({ zoom }) => rulerVertical.$set({ currentZoom: zoom }))
+    editor.on('zoom-updated', ({ zoom }) => rulerVertical.$set({ currentZoom: zoom }))
 
     editor.on("SelectionChange", () => {
         ruler.setParagraphSelected(editor)

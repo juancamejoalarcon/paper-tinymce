@@ -1,18 +1,36 @@
 import type { Editor } from 'tinymce';
-import * as Events from '../../plugin/api/Events';
+import { store } from '@/core/store'
 import ZoomComponent from './ZoomComponent.svelte'
 
-const createZoom = (editor: Editor): void => {
-    const divEl = document.createElement('div')
-    document.querySelector('.tox-edit-area').appendChild(divEl)
-    const zoom = new ZoomComponent({ target: divEl, props: { editor } })
-    zoom.$on('zoom', ({ detail: { zoom } }) => {
-        Events.fireZoomUpdate(editor, zoom)
-    })
+class ZoomClass {
+
+    editor: Editor = null;
+
+    zoomComponent: ZoomComponent;
+    
+    start(editor: Editor) {
+        this.editor = editor
+
+        setTimeout(() => {
+            this.createZoomElement()
+            this.onZoomChanged()
+        })
+    }
+
+    createZoomElement() {
+
+        const divEl = document.createElement('div')
+        document.querySelector('.tox-edit-area').appendChild(divEl);
+
+        this.zoomComponent = new ZoomComponent({ target: divEl, props: { } })
+    }
+
+    onZoomChanged() {
+        this.zoomComponent.$on('zoom', ({ detail: { zoom } }) => {
+            store.updateZoom(zoom)
+        })
+    }
+
 }
 
-const setup = (editor: Editor): void => {
-    setTimeout(() => createZoom(editor), 0);
-}
-
-export { setup }
+export const Zoom = new ZoomClass();

@@ -2,6 +2,7 @@ import type { Editor } from "tinymce";
 import mammoth from "mammoth";
 import { getGlobalSettings } from './global-settings'
 import * as Events from '../../plugin//api/Events';
+import { store } from '@/core/store'
 
 function transformElement(element) {
   if (element.children) {
@@ -54,21 +55,17 @@ export const onClickImportButton = (editor: Editor) => {
 
       reader.onload = (loadEvent) => {
         const arrayBuffer = loadEvent.target.result;
-
-
-        transformDocxToHtml(arrayBuffer as any)
-        .then((result: string) => {
-            editor.setContent(result);
-            getGlobalSettings(arrayBuffer as ArrayBuffer)
-            .then((globalSettings: any) => {
-              console.log('----')
-              console.log(globalSettings)
-              console.log('----')
-              Events.fireMarginRulerUpdate(editor, globalSettings.margins)
-            })
-        }).catch((error: any) => {
-            console.error(error)
+        getGlobalSettings(arrayBuffer as ArrayBuffer)
+        .then((globalSettings: any) => {
+          store.updateGlobalMargins(globalSettings.margins)
+          transformDocxToHtml(arrayBuffer as any)
+          .then((result: string) => {
+              editor.setContent(result);
+          }).catch((error: any) => {
+              console.error(error)
+          })
         })
+
       };
 
       reader.readAsArrayBuffer(file);

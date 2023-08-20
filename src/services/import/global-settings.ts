@@ -18,7 +18,7 @@ const getMargins = ($: CheerioAPI) => {
             const attribute = el.attribs['w:' + key]
             if (attribute) {
                 const conversedNumber = twipsToPixels(parseFloat(attribute)) / widthPoint
-                margins[key] = conversedNumber;
+                margins[key] = Math.round(conversedNumber);
             }
         })
     })

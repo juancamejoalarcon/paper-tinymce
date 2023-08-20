@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from "svelte";
   import type { Editor } from "tinymce";
-  import { makeAllElementsNonEditable } from "../shared/utils"
 
   // export let editor: Editor;
 
@@ -44,8 +43,6 @@
   onMount(() => {
     rulerVertical = document.querySelector(".ruler.vertical");
     rulerHorizontal = document.querySelector(".ruler");
-
-    makeAllElementsNonEditable(container)
   });
 </script>
 

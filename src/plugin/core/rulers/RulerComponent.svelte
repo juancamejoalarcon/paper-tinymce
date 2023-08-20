@@ -1,6 +1,5 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
-  import { makeAllElementsNonEditable } from "../shared/utils";
 
   // export let defaultMargin: Margins = { top: 0, left: 0, bottom: 0, right: 0 };
   export let vertical: boolean = false;
@@ -154,7 +153,6 @@
   }
 
   onMount(() => {
-    // makeAllElementsNonEditable(container)
     if (vertical) {
       const offset = 50
       const observer = new ResizeObserver((entries) => {

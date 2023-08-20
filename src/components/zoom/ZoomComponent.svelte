@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from "svelte";
-  import { makeAllElementsNonEditable } from "../../plugin/core/shared/utils";
 
   // export let editor: Editor;
 
@@ -45,8 +44,6 @@
   onMount(() => {
     rulerVertical = document.querySelector(".ruler.vertical");
     rulerHorizontal = document.querySelector(".ruler");
-
-    makeAllElementsNonEditable(container)
   });
 </script>
 
