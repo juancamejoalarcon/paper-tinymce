@@ -1,7 +1,6 @@
 import type { Editor } from "tinymce";
 import mammoth from "mammoth";
 import { getGlobalSettings } from './global-settings'
-import * as Events from '../../plugin//api/Events';
 import { store } from '@/core/store'
 
 function transformElement(element) {

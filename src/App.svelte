@@ -6,9 +6,8 @@
   import { registerImportButton, getMenuOptions } from "@/services/menu/menu.service";
   import { Rulers } from '@/components/rulers/Rulers'
   import { Zoom } from '@/components/zoom/Zoom'
-  import * as Pages from '@/components/pages/Pages'
-  import * as css from "./app.css?inline";
-  import * as Api from "@/plugin/api/Api";
+  import { Pages } from '@/components/pages/Pages'
+  import * as css from "./paper_styles.css?inline";
 
   const init = () => {
     tinymce.init({
@@ -20,10 +19,9 @@
       },
       init_instance_callback: (editor: Editor) => {
         store.setEditor(editor)
-        const api = Api.get();
         Rulers.start(editor);
         Zoom.start(editor);
-        Pages.setup(editor, api, 100);
+        Pages.start(editor);
 
       },
       content_style: css.default,

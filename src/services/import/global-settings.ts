@@ -1,12 +1,12 @@
 import JSZip from "jszip";
 import { load, type CheerioAPI } from "cheerio";
-import { twipsToPixels } from '../utils/twips'
+import { twipsToPixels } from '@/services/utils/twips'
 import { 
     A4Dimensions,
     DefaultMargins,
     rulerWidthNumberOfPoints,
     rulerHeightNumberOfPoints,
-} from "../../plugin/core/shared/utils";
+} from "@/core/dimensions";
 
 const widthPoint = A4Dimensions.widthInPixes / rulerWidthNumberOfPoints;
 
