@@ -1,7 +1,7 @@
 import type { Editor } from "tinymce";
 import mammoth from "mammoth";
 import { getGlobalSettings } from './global-settings'
-import { store } from '@/core/store'
+import { store } from '@/core/store';
 
 function transformElement(element) {
   if (element.children) {
@@ -59,6 +59,7 @@ export const onClickImportButton = (editor: Editor) => {
           store.updateGlobalMargins(globalSettings.margins)
           transformDocxToHtml(arrayBuffer as any)
           .then((result: string) => {
+              editor.dispatch('reset-pages')
               editor.setContent(result);
           }).catch((error: any) => {
               console.error(error)

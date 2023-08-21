@@ -50,7 +50,7 @@ class Ruler {
   }
 
   setEvents() {
-    this.editor.on("currentPageUpdate", ({ currentPage }) =>
+    this.editor.on("current-page-updated", ({ currentPage }) =>
       this.verticalComponent.$set({ currentPage })
     );
 

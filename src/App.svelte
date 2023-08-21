@@ -4,10 +4,12 @@
   import { store } from "@/core/store" 
   import { getTinymceBasicConfig } from "@/lib/services/tinymce-basic-config";
   import { registerImportButton, getMenuOptions } from "@/services/menu/menu.service";
+  import { Highlight } from "@/services/highlight/highlight.service";
   import { Rulers } from '@/components/rulers/Rulers'
   import { Zoom } from '@/components/zoom/Zoom'
   import { Pages } from '@/components/pages/Pages'
   import * as css from "./paper_styles.css?inline";
+  import { PaperTinymce } from "@/core/editor-global-methods";
 
   const init = () => {
     tinymce.init({
@@ -16,6 +18,8 @@
       ...getMenuOptions(),
       setup: (editor) => {
         registerImportButton(editor);
+        Highlight.start(editor);
+        PaperTinymce.start(editor);
       },
       init_instance_callback: (editor: Editor) => {
         store.setEditor(editor)

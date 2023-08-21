@@ -7,6 +7,7 @@ import {
   rulerWidthNumberOfPoints,
   rulerHeightNumberOfPoints,
 } from "@/core/dimensions";
+import { store } from '@/core/store'
 
 import { getOuterHeightOfElement } from "@/services/utils/size";
 
@@ -30,7 +31,6 @@ class PagesClass {
   allPages: HTMLDivElement[] = [];
   currentPage = 1;
 
-  currentMargins = DefaultMargins;
   widthPoint = A4Dimensions.widthInPixes / rulerWidthNumberOfPoints;
   heightPoint = A4Dimensions.heightInPixels / rulerHeightNumberOfPoints;
   currentZoom = 0;
@@ -51,17 +51,19 @@ class PagesClass {
       this.build();
     });
 
+    this.editor.on("reset-pages", () => {
+      this.resetToBeforeInitalState()
+    })
+
     this.editor.on("SetContent", () => {
-      this.resetToBeforeInitalState();
+      this.setInitialState()
       this.build();
       this.applyZoom(this.currentZoom);
     });
 
     this.editor.on("SelectionChange", () => {
       this.setCurrentPage();
-      this.editor.dispatch("currentPageUpdate", {
-        currentPage: this.currentPage,
-      });
+      store.setCurrentPage(this.currentPage)
     });
 
     this.editor.contentWindow.addEventListener("paste", () => {
@@ -72,9 +74,7 @@ class PagesClass {
 
     this.editor.on("zoom-updated", ({ zoom }) => this.applyZoom(zoom));
     this.editor.on("margins-changed", (event) => {
-      this.setCurrentMargins(event.margins);
-      // I do it twice because there are no pages on init and it needs to resize after creating the pages
-      this.doubleUpdate()
+      this.build()
     });
   }
 
@@ -122,6 +122,9 @@ class PagesClass {
       this.pagesContainer = pagesContainerEl;
 
       this.body.appendChild(this.root);
+    } else {
+      this.root = this.doc.getElementById(this.rootId);
+      this.pagesContainer = this.root.querySelector('.' + this.styleClasses.pagesContainer);
     }
   }
 
@@ -205,27 +208,22 @@ class PagesClass {
     wrapper.style.cssText = `
         height: ${A4Dimensions.height}; 
         width: ${A4Dimensions.width};
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-        margin: 20px auto;
-        overflow: auto;
-        background: white;
-        display: flex;
-        flex-direction: column;
-        background-color: white;
       `;
     return wrapper;
   }
 
   setMarginsOfPage(page: HTMLDivElement) {
-    page.style.marginLeft = this.widthPoint * this.currentMargins.left + "px";
-    page.style.marginRight = this.widthPoint * this.currentMargins.right + "px";
-    page.style.marginTop = this.heightPoint * this.currentMargins.top + "px";
+    const currentMargins = store.getCurrentMargins()
+    page.style.marginLeft = this.widthPoint * currentMargins.left + "px";
+    page.style.marginRight = this.widthPoint * currentMargins.right + "px";
+    page.style.marginTop = this.heightPoint * currentMargins.top + "px";
   }
 
   getMarginTopAndBottomOfPage(): number {
+    const currentMargins = store.getCurrentMargins()
     return (
-      this.heightPoint * this.currentMargins.bottom +
-      this.heightPoint * this.currentMargins.top
+      this.heightPoint * currentMargins.bottom +
+      this.heightPoint * currentMargins.top
     );
   }
 
@@ -259,7 +257,9 @@ class PagesClass {
       const pageElement = selectedNode.closest(`.${this.styleClasses.page}`);
       if (pageElement) {
         const newPage = Number(pageElement.getAttribute("data-page-number"));
-        if (newPage !== this.currentPage) this.currentPage = newPage;
+        if (newPage !== this.currentPage) {
+          this.currentPage = newPage;
+        }
       }
     }
   }
@@ -296,9 +296,6 @@ class PagesClass {
     this.currentZoom = zoom;
   }
 
-  setCurrentMargins(margins: any) {
-    this.currentMargins = margins;
-  }
 }
 
 export const Pages = new PagesClass();
