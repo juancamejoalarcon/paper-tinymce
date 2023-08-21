@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import tinymce, { Editor } from "tinymce";
+  import type { Editor, TinyMCE } from "tinymce";
   import { store } from "@/core/store" 
   import { getTinymceBasicConfig } from "@/lib/services/tinymce-basic-config";
   import { registerImportButton, getMenuOptions } from "@/services/menu/menu.service";
@@ -12,7 +12,8 @@
   import { PaperTinymce } from "@/core/editor-global-methods";
 
   const init = () => {
-    tinymce.init({
+    // @ts-ignore
+    (tinymce as TinyMCE).init({
       selector: "#paper-editor-container",
       ...getTinymceBasicConfig(),
       ...getMenuOptions(),
@@ -29,6 +30,8 @@
 
       },
       content_style: css.default,
+      skin: false,
+      // content_css: '@/assets/tinymce/skins/content/default/content.css'
     });
   };
 
