@@ -6,7 +6,6 @@ import '@/assets/tinymce/skins/ui/oxide/skin.min.css';
 
 import '@/assets/tinymce/skins/ui/oxide/content.css';
 import '@/assets/tinymce/skins/ui/oxide/content.inline.css';
-import '@/assets/tinymce/skins/ui/oxide/fonts/tinymce-mobile.woff';
 import '@/assets/tinymce/skins/ui/oxide/skin.css';
 import '@/assets/tinymce/skins/ui/oxide/skin.shadowdom.css';
 
