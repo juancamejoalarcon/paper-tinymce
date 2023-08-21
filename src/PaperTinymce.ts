@@ -57,3 +57,16 @@ export const startPaperTinymce = (selector: string) => {
     })
     return editor
 }
+
+const exportToModuleLoaders = (startPaperTinymce) => {
+    if (typeof module === "object") {
+      try {
+        module.exports = startPaperTinymce;
+      } catch (_) {}
+    }
+  };
+  const exportToWindowGlobal = (startPaperTinymce) => {
+    (window as any).startPaperTinymce = startPaperTinymce;
+  };
+  exportToWindowGlobal(startPaperTinymce);
+  exportToModuleLoaders(startPaperTinymce);
