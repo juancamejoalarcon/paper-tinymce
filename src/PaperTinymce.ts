@@ -1,13 +1,19 @@
 import type { Editor } from 'tinymce';
 import '@/services/dependencies'
+import { store } from "@/core/store" 
 import App from './App.svelte'
 
 
 
 export const PaperTinymce = (selector: string): Editor => {
     let editor: Editor;
+    const shadowOpen = document.querySelector(selector).attachShadow({ mode: "open" });
+    store.setRootContainerEl(shadowOpen);
+    const div = document.createElement("div");
+    div.id = 'paper-editor-container';
+    store.rootContainerEl.appendChild(div);
     const app = new App({
-        target: document.querySelector(selector),
+        target: shadowOpen,
         props: {
             setEditor: (ed: Editor) => {
                 editor = ed

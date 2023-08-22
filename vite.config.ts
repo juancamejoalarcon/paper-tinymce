@@ -5,13 +5,12 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/paper-tinymce/dist/',
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [svelte(), cssInjectedByJsPlugin()],
+  plugins: [svelte({emitCss: false}), cssInjectedByJsPlugin()],
   build: {
     rollupOptions: {
       output: {
@@ -31,7 +30,6 @@ export default defineConfig({
         }
       },
     },
-    // rollupOptions: {}
   },
 })
 

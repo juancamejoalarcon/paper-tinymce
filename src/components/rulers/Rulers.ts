@@ -37,7 +37,7 @@ class Ruler {
 
   getRulerOptions(editor: Editor, vertical: boolean) {
     const divEl = document.createElement("div");
-    document.querySelector(".tox-edit-area").appendChild(divEl);
+    store.rootContainerEl.querySelector(".tox-edit-area").appendChild(divEl);
     return {
       target: divEl,
       props: {

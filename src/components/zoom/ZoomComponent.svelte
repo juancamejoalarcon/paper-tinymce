@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from "svelte";
+  import { store } from "@/core/store" 
 
   // export let editor: Editor;
 
@@ -42,8 +43,8 @@
   };
 
   onMount(() => {
-    rulerVertical = document.querySelector(".ruler.vertical");
-    rulerHorizontal = document.querySelector(".ruler");
+    rulerVertical = store.rootContainerEl.querySelector(".ruler.vertical");
+    rulerHorizontal = store.rootContainerEl.querySelector(".ruler");
   });
 </script>
 

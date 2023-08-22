@@ -3,6 +3,8 @@ import type { Margins } from "./dimensions";
 import { DefaultMargins } from "./dimensions";
 
 class Store {
+
+  rootContainerEl: ShadowRoot | null = null;
   editor: Editor;
   currentMargins = { ...DefaultMargins };
   currentZoom: number = 0;
@@ -10,6 +12,10 @@ class Store {
 
   setEditor(editor: Editor) {
     this.editor = editor;
+  }
+
+  setRootContainerEl(el: ShadowRoot) {
+    this.rootContainerEl = el
   }
 
   updateGlobalMargins(margins: Margins) {

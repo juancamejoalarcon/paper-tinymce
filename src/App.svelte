@@ -8,15 +8,16 @@
   import { Rulers } from '@/components/rulers/Rulers'
   import { Zoom } from '@/components/zoom/Zoom'
   import { Pages } from '@/components/pages/Pages'
-  import * as css from "./paper_styles.css?inline";
+  import * as css from "./paper_styles.scss?inline";
   import { PaperTinymce } from "@/core/editor-global-methods";
+  import { getTinymceTemplateStyles } from '@/services/dependencies/styles'
 
   export let setEditor: any = () => {};
 
   const init = () => {
     // @ts-ignore
     (tinymce as TinyMCE).init({
-      selector: "#paper-editor-container",
+      target: store.rootContainerEl.querySelector('#paper-editor-container'),
       ...getTinymceBasicConfig(),
       ...getMenuOptions(),
       setup: (editor) => {
@@ -38,14 +39,14 @@
   };
 
   onMount(() => {
+    let style = document.createElement("style");
+    style.textContent = getTinymceTemplateStyles()
+    store.rootContainerEl.appendChild(style);
     init();
   });
 </script>
 
 <div class="paper-tinymce">
-  <div id="paper-editor-container">
-    <p>Start typing here...</p>
-  </div>
 </div>
 
 <style>

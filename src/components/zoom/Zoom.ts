@@ -20,7 +20,7 @@ class ZoomClass {
     createZoomElement() {
 
         const divEl = document.createElement('div')
-        document.querySelector('.tox-edit-area').appendChild(divEl);
+        store.rootContainerEl.querySelector('.tox-edit-area').appendChild(divEl);
 
         this.zoomComponent = new ZoomComponent({ target: divEl, props: { } })
     }

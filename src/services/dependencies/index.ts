@@ -1,11 +1,4 @@
-import "@/assets/tinymce/skins/content/default/content.css";
-import "@/assets/tinymce/skins/ui/oxide/content.css";
-import "@/assets/tinymce/skins/ui/oxide/skin.min.css";
 
-import "@/assets/tinymce/skins/ui/oxide/content.css";
-import "@/assets/tinymce/skins/ui/oxide/content.inline.css";
-import "@/assets/tinymce/skins/ui/oxide/skin.css";
-import "@/assets/tinymce/skins/ui/oxide/skin.shadowdom.css";
 
 import "@/assets/tinymce/tinymce";
 
