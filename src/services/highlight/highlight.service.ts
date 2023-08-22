@@ -1,6 +1,6 @@
 import type { Editor } from "tinymce"
 import { Throttler } from "@ephox/katamari";
-import { PaperTinymce } from "@/core/editor-global-methods";
+import { GlobalMethods } from "@/core/editor-global-methods";
 
 class HighlightClass {
 
@@ -20,7 +20,7 @@ class HighlightClass {
 
     highlight() {
         const bookmark = this.editor.selection.getBookmark(2, true);
-        let content = PaperTinymce.getContent();
+        let content = GlobalMethods.getContent();
         // Hghlight Logic
         content = content.replace(/(?<!<mark>){%([^}]+)%}/g, '<mark>{%$1%}</mark>');
         // Highlight IDs
