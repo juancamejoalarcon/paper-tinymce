@@ -34,6 +34,7 @@
       },
       content_style: css.default,
       skin: false,
+      content_css: ''
     });
   };
 

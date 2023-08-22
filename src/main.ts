@@ -1,3 +1,3 @@
-import { startPaperTinymce } from './PaperTinyMCE'
+import { PaperTinymce } from './PaperTinymce'
 
-startPaperTinymce('#app')
+PaperTinymce('#app')
