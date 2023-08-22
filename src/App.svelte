@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import type { Editor, TinyMCE } from "tinymce";
   import { store } from "@/core/store" 
-  import { getTinymceBasicConfig } from "@/lib/services/tinymce-basic-config";
+  import { getTinymceBasicConfig } from "@/services/tinymce-basic-config";
   import { registerImportButton, getMenuOptions } from "@/services/menu/menu.service";
   import { Highlight } from "@/services/highlight/highlight.service";
   import { Rulers } from '@/components/rulers/Rulers'
@@ -30,7 +30,6 @@
         Rulers.start(editor);
         Zoom.start(editor);
         Pages.start(editor);
-
       },
       content_style: css.default,
       skin: false,
@@ -45,7 +44,7 @@
 
 <div class="paper-tinymce">
   <div id="paper-editor-container">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, voluptates! Repudiandae architecto consequuntur quis ab, similique, cum asperiores commodi blanditiis, libero explicabo debitis. Voluptates corporis tempore ipsa ipsum consequatur fugit!</p>
+    <p>Start typing here...</p>
   </div>
 </div>
 

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
 
-
   // export let defaultMargin: Margins = { top: 0, left: 0, bottom: 0, right: 0 };
   export let vertical: boolean = false;
   export let currentPage: number = 0;
@@ -12,30 +11,36 @@
   let globalRangeBackground = "white";
   let verticalOffset: string;
   let zoom: number = 1;
-  let marginTopOfStartRange = ''
-  let marginTopOfEndRange = ''
-  let marginTopOfControl = ''
-  let controlsWidth = 'auto'
-  let marginLeftOfGlobalStartRange = ''
-  let marginLeftOfGlobalEndRange = ''
+  let marginTopOfStartRange = "";
+  let marginTopOfEndRange = "";
+  let marginTopOfControl = "";
+  let controlsWidth = "auto";
+  let marginLeftOfGlobalStartRange = "";
+  let marginLeftOfGlobalEndRange = "";
 
   $: {
     if (vertical) {
-      zoom = 1 + currentZoom
-      verticalOffset = vertical && currentPage && currentPage !== 1
-      ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + "px"
-      : "";
-      setVerticalMarginTop()
+      zoom = 1 + currentZoom;
+      verticalOffset =
+        vertical && currentPage && currentPage !== 1
+          ? (currentPage - 1) * 1123 + (currentPage - 1) * 20 + "px"
+          : "";
+      setVerticalMarginTop();
 
-      marginTopOfStartRange = vertical ? `${-5 + (0.1 * startValue)}px` : '';
-      marginTopOfEndRange = vertical ? `${5 - (0.1 * (numberOfPoints - endValue))}px` : '';
-      marginTopOfControl = vertical ? `-${startValue * 0.24}px` : ''
-      controlsWidth = vertical ? `${100.4 + ((0.02 * startValue) + (0.03 * (numberOfPoints - endValue)))}%` : 'auto'
-
+      marginTopOfStartRange = vertical ? `${-5 + 0.1 * startValue}px` : "";
+      marginTopOfEndRange = vertical
+        ? `${5 - 0.1 * (numberOfPoints - endValue)}px`
+        : "";
+      marginTopOfControl = vertical ? `-${startValue * 0.24}px` : "";
+      controlsWidth = vertical
+        ? `${100.4 + (0.02 * startValue + 0.03 * (numberOfPoints - endValue))}%`
+        : "auto";
     } else {
-      marginLeftOfGlobalStartRange = `${-48 + (0.6 * globalStartValue)}px`
-      const end = (numberOfPoints - globalEndValue)
-      marginLeftOfGlobalEndRange = `${end !== 0 ? 52 - (0.6 * (numberOfPoints - globalEndValue)) : 50}px`
+      marginLeftOfGlobalStartRange = `${-48 + 0.6 * globalStartValue}px`;
+      const end = numberOfPoints - globalEndValue;
+      marginLeftOfGlobalEndRange = `${
+        end !== 0 ? 52 - 0.6 * (numberOfPoints - globalEndValue) : 50
+      }px`;
     }
   }
 
@@ -52,19 +57,17 @@
       ${inputColor} ${(endValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
 
-
-    const startOffset = globalStartValue >= 5 ? globalStartValue * 0.04 : 0.6
-    const globalEnd = (numberOfPoints - globalEndValue)
-    const endOffset = globalEnd >= 5 ? globalEnd * 0.04 : 0.6
+    const startOffset = globalStartValue >= 5 ? globalStartValue * 0.04 : 0.6;
+    const globalEnd = numberOfPoints - globalEndValue;
+    const endOffset = globalEnd >= 5 ? globalEnd * 0.04 : 0.6;
     globalRangeBackground = `linear-gradient(
       to right,
       ${inputColor} 0%,
-      ${inputColor} ${((globalStartValue / numberOfPoints) * 100) - startOffset}%,
+      ${inputColor} ${(globalStartValue / numberOfPoints) * 100 - startOffset}%,
       ${rangeColor} ${(globalStartValue / numberOfPoints) * 100}%,
-      ${rangeColor} ${((globalEndValue / numberOfPoints) * 100) + endOffset}%, 
+      ${rangeColor} ${(globalEndValue / numberOfPoints) * 100 + endOffset}%, 
       ${inputColor} ${(globalEndValue / numberOfPoints) * 100}%, 
       ${inputColor} 100%)`;
-      
   }
 
   const numberOfPoints = 66;
@@ -87,20 +90,20 @@
   const onControlChanged = (side: string): void => {
     let value: number;
 
-    const startLimit = (numberOfPoints / 2) - 10
-    const endLimit = (numberOfPoints / 2) + 10
+    const startLimit = numberOfPoints / 2 - 10;
+    const endLimit = numberOfPoints / 2 + 10;
 
-    if (startValue > startLimit) startValue = startLimit
-    if (endValue < endLimit) endValue = endLimit
+    if (startValue > startLimit) startValue = startLimit;
+    if (endValue < endLimit) endValue = endLimit;
 
-    if (globalStartValue > startLimit) globalStartValue = startLimit
-    if (globalEndValue < endLimit) globalEndValue = endLimit
+    if (globalStartValue > startLimit) globalStartValue = startLimit;
+    if (globalEndValue < endLimit) globalEndValue = endLimit;
 
     if (side === "start" && startValue < globalStartValue) {
       startValue = globalStartValue;
     }
     if (side === "end" && endValue > globalEndValue) {
-      endValue = globalEndValue
+      endValue = globalEndValue;
     }
 
     if (side === "global-start" && globalStartValue > globalEndValue) {
@@ -108,18 +111,16 @@
     }
 
     if (side === "global-end") {
-      globalEndValue = globalStartValue <= globalEndValue ? globalEndValue : globalStartValue;
+      globalEndValue =
+        globalStartValue <= globalEndValue ? globalEndValue : globalStartValue;
     }
 
-
-
-    if (side === "start") value = startValue - globalStartValue
+    if (side === "start") value = startValue - globalStartValue;
     if (side === "end") {
-      value = (!vertical ? globalEndValue : numberOfPoints) - (endValue)
+      value = (!vertical ? globalEndValue : numberOfPoints) - endValue;
     }
-    if (side === "global-start") value = globalStartValue 
-    if (side === "global-end") value = numberOfPoints - globalEndValue 
-    
+    if (side === "global-start") value = globalStartValue;
+    if (side === "global-end") value = numberOfPoints - globalEndValue;
 
     dispatch("margin-changed", {
       side,
@@ -131,16 +132,16 @@
     dispatch("indent-changed", {
       value: indentValue - globalStartValue,
     });
-  }
+  };
 
   const toggleRulerMark = (control: string, add = true) => {
     let value: number;
 
-    if (control === "start") value = startValue
-    if (control === "end") value = endValue + 1
-    if (control === "global-start") value = globalStartValue
-    if (control === "global-end") value = globalEndValue + 1
-    if (control === "indent") value = indentValue
+    if (control === "start") value = startValue;
+    if (control === "end") value = endValue + 1;
+    if (control === "global-start") value = globalStartValue;
+    if (control === "global-end") value = globalEndValue + 1;
+    if (control === "indent") value = indentValue;
 
     rulerMarks.children[value].classList[add ? "add" : "remove"](markClass);
   };
@@ -166,43 +167,46 @@
   };
 
   const setVerticalMarginTop = () => {
-    const contentVertical = container?.firstElementChild as HTMLElement
+    const contentVertical = container?.firstElementChild as HTMLElement;
     const offset = 16 + (verticalOffset ? parseInt(verticalOffset) : 0);
-    const margin = (-1.0004 * (win.scrollY)) + (offset * zoom);
+    const margin = -1.0004 * win.scrollY + offset * zoom;
     let correction = margin;
-    if (zoom < 1) correction = margin + (4  / zoom)
-    else if (zoom > 1) correction = margin - (5  / zoom)
-    if (contentVertical) contentVertical.style.marginTop = `${correction}px`
-  }
+    if (zoom < 1) correction = margin + 4 / zoom;
+    else if (zoom > 1) correction = margin - 5 / zoom;
+    if (contentVertical) contentVertical.style.marginTop = `${correction}px`;
+  };
 
   const onScrollListener = (): void => {
-
-      win.addEventListener('scroll', () => {
-        if (!vertical) {
-          container.style.marginLeft = '-' + win.scrollX + 'px'
-        } else {
-          setVerticalMarginTop()
-        }
-      })
-  }
+    win.addEventListener("scroll", () => {
+      if (!vertical) {
+        container.style.marginLeft = "-" + win.scrollX + "px";
+      } else {
+        setVerticalMarginTop();
+      }
+    });
+  };
 
   onMount(() => {
     if (vertical) {
-      const offset = 50
+      const offset = 50;
       const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          container.style.height = (entry.contentRect.height + offset) + 'px'
+          container.style.height = entry.contentRect.height + offset + "px";
         }
       });
       observer.observe(win.document.body);
     }
-    onScrollListener()
+    onScrollListener();
   });
 </script>
 
 <div bind:this={container} class="ruler" class:vertical>
-  <div class="content" >
-    <div class="controls" style:margin-left="{marginTopOfControl}" style:width="{controlsWidth}">
+  <div class="content">
+    <div
+      class="controls"
+      style:margin-left={marginTopOfControl}
+      style:width={controlsWidth}
+    >
       <div class="controls-container">
         {#if !vertical}
           <input
@@ -224,7 +228,7 @@
             type="range"
             min="0"
             max={numberOfPoints}
-            style:--thumbMarginLeftGlobalStart="{marginLeftOfGlobalStartRange}"
+            style:--thumbMarginLeftGlobalStart={marginLeftOfGlobalStartRange}
           />
           <input
             bind:this={globalRightMarginInput}
@@ -237,8 +241,10 @@
             style="background: {globalRangeBackground};"
             min="0"
             max={numberOfPoints}
-            style:--thumbMarginLeftGlobalEnd="{marginLeftOfGlobalEndRange}"
-            style:margin-left="{((numberOfPoints - globalEndValue) === 0 ? '2px' : '' )}"
+            style:--thumbMarginLeftGlobalEnd={marginLeftOfGlobalEndRange}
+            style:margin-left={numberOfPoints - globalEndValue === 0
+              ? "2px"
+              : ""}
           />
         {/if}
         <input
@@ -250,7 +256,7 @@
           type="range"
           min="0"
           max={numberOfPoints}
-          style:--thumbMarginLeftStart="{marginTopOfStartRange}"
+          style:--thumbMarginLeftStart={marginTopOfStartRange}
         />
         <input
           bind:this={rightMarginInput}
@@ -263,19 +269,42 @@
           style="background: {vertical ? rangeBackground : 'transparent'};"
           min="0"
           max={numberOfPoints}
-          style:--thumbMarginLeftEnd="{marginTopOfEndRange}"
+          style:--thumbMarginLeftEnd={marginTopOfEndRange}
         />
       </div>
     </div>
     <ul class="ruler-points" bind:this={rulerMarks}>
       {#each ruler as point}
-        <li></li>
+        <li />
       {/each}
     </ul>
   </div>
 </div>
+
 <style lang="scss">
-  @import './RulerComponent.scss';
+  @import "./RulerComponent.scss";
+  :global(.mark) {
+    &::after {
+      content: "";
+      height: 100vh;
+      width: 1px;
+      top: 0;
+      margin-top: 18px;
+      background-color: #4285f4;
+      position: absolute;
+      z-index: 99;
+    }
+  }
+  :global(.mark-vertical) {
+    &::after {
+      content: "";
+      height: 100vw;
+      width: 2px;
+      top: 0;
+      margin-top: 23px;
+      background-color: #4285f4;
+      position: absolute;
+      margin-top: -100vw;
+    }
+  }
 </style>
-
-
