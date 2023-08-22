@@ -1,6 +1,7 @@
 # PaperTinyMCE
 
-The goal of this project is to create a tool capable of editing HTML in paper format. (A4, A3,…)
+The goal of this project is to create a tool capable of editing HTML in paper format. (A4, A3,…),
+with the possibility of importing files from Word, Google docs,...
 
 Live demo: [HERE](https://juancamejoalarcon.github.io/paper-tinymce/live-demo/)
 
