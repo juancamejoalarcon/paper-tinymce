@@ -9,7 +9,7 @@
   import { Zoom } from '@/components/zoom/Zoom'
   import { Pages } from '@/components/pages/Pages'
   import * as css from "./paper_styles.scss?inline";
-  import { PaperTinymce } from "@/core/editor-global-methods";
+  import { GlobalMethods } from "@/core/editor-global-methods";
   import { getTinymceTemplateStyles } from '@/services/dependencies/styles'
 
   export let setEditor: any = () => {};
@@ -24,7 +24,7 @@
         setEditor(editor)
         registerImportButton(editor);
         Highlight.start(editor);
-        PaperTinymce.start(editor);
+        GlobalMethods.start(editor);
       },
       init_instance_callback: (editor: Editor) => {
         store.setEditor(editor)
@@ -34,7 +34,8 @@
       },
       content_style: css.default,
       skin: false,
-      content_css: ''
+      content_css: '',
+      height: '100%'
     });
   };
 
