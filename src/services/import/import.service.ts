@@ -45,7 +45,7 @@ export const onClickImportButton = (editor: Editor) => {
     },
     buttons: [],
   });
-  document
+  store.rootContainerEl
     .querySelector("#paper-tinymce-upload-input")
     .addEventListener("change", (event: any) => {
       const file = event.target.files[0];
@@ -61,6 +61,7 @@ export const onClickImportButton = (editor: Editor) => {
           .then((result: string) => {
               editor.dispatch('reset-pages')
               editor.setContent(result);
+              setTimeout(() => editor.dispatch('refresh-pages'), 300);
           }).catch((error: any) => {
               console.error(error)
           })

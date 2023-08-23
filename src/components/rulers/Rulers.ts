@@ -71,7 +71,7 @@ class Ruler {
       .startContainer as HTMLElement;
 
     if (firstElSelected.parentElement.tagName !== "SECTION") {
-      while (firstElSelected.parentElement.tagName !== "SECTION")
+      while (firstElSelected.parentElement && firstElSelected.parentElement.tagName !== "SECTION")
         firstElSelected = firstElSelected.parentElement;
     }
 

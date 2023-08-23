@@ -1,4 +1,6 @@
 import type { Editor } from "tinymce";
+import { store } from "@/core/store"
+
 
 class GlobalMethodsClass {
     editor: Editor = null;
@@ -14,7 +16,10 @@ class GlobalMethodsClass {
         body.querySelectorAll('.paper-page').forEach((page: HTMLElement) => {
             content += page.firstElementChild.innerHTML
         })
-        return content
+
+        const data = { pgMar: store.getCurrentMargins() }
+        const papertinymceInfo = `<papertinymceinfo>${JSON.stringify(data)}</papertinymceinfo>`
+        return papertinymceInfo + content
     }
 
     // Returns content with pages included

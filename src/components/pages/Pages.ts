@@ -46,14 +46,18 @@ class PagesClass {
   setEvents() {
     this.editor.on("Undo Redo ViewUpdate", this.build);
 
-    this.editor.on("keyup", (e) => {
+    this.editor.on("keydown", (e) => {
       if (e.keyCode === 91 || e.keyCode === 17) return;
+
+      const firstPage = this.body.querySelector('#page-1');
+      if (!firstPage) this.resetToBeforeInitalState()
       this.build();
     });
 
-    this.editor.on("reset-pages", () => {
-      this.resetToBeforeInitalState()
-    })
+
+    this.editor.on("refresh-pages", () => this.build())
+    
+    this.editor.on("reset-pages", () => this.resetToBeforeInitalState())
 
     this.editor.on("SetContent", () => {
       this.setInitialState()
@@ -174,7 +178,7 @@ class PagesClass {
         acumulatedHeight = heightOfNode;
         currentPage += 1;
         nodesToInsertInPage = [node];
-        if (index === nodes.length - 1 && this.inited) {
+        if (index === nodes.length - 1) {
           this.buildPage(currentPage, nodesToInsertInPage);
         }
       } else {
