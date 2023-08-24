@@ -75,6 +75,15 @@ class Ruler {
         firstElSelected = firstElSelected.parentElement;
     }
 
+    if (firstElSelected.tagName === "HTML") {
+      const page1 = editor.getBody().querySelector('#page-1')
+      const firstParagraph = page1?.firstElementChild?.firstElementChild as HTMLElement
+      if (firstParagraph) {
+        this.currentParagraphSelected = firstParagraph;
+        return
+      }
+    }
+
     this.currentParagraphSelected = firstElSelected;
   }
 
@@ -121,9 +130,11 @@ class Ruler {
           // updated indent
           const indent = style.textIndent.replace("px", "");
           let indentValue = 0;
-          if (indent)
-            indentValue =
-              Math.round(parseInt(indent) / this.widthPoint) + value;
+          if (indent) {
+            indentValue = Math.round(parseInt(indent) / this.widthPoint) + value;
+          } else {
+            indentValue = value
+          }
           this.horizontalComponent.$set({ indentValue });
         }
         if (side === "end") style.marginRight = this.widthPoint * value + "px";

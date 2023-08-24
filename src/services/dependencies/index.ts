@@ -35,3 +35,5 @@ import "@/assets/tinymce/plugins/nonbreaking/plugin";
 import "@/assets/tinymce/plugins/visualchars/plugin";
 import "@/assets/tinymce/plugins/visualblocks/plugin";
 import "@/assets/tinymce/plugins/directionality/plugin";
+
+import "@/assets/tinymce/langs/es";

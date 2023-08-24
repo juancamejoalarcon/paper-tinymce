@@ -3,21 +3,18 @@ import mammoth from "mammoth";
 import { getGlobalSettings } from './global-settings'
 import { store } from '@/core/store';
 
-function transformElement(element) {
-  if (element.children) {
-    element.children.forEach(element => {
-      if (element.indent && element.indent.start) {
-        console.log('-----')
-        console.log(element)
-        console.log('-----')
-      }
-    });
-}
+const styleMap = [
+  "p[style-name='Title'] => h1:fresh",
+]
+
+function transformDocument(element) {
   return element;
 }
 
+
 const options = {
-  transformDocument: transformElement
+  transformDocument,
+  styleMap
 };
 
 export const transformDocxToHtml = (arrayBuffer: ArrayBuffer) => {
@@ -39,7 +36,7 @@ export const onClickImportButton = (editor: Editor) => {
       items: [
         {
           type: "htmlpanel",
-          html: '<input id="paper-tinymce-upload-input" type="file" />',
+          html: '<input id="paper-tinymce-upload-input" type="file" accept=".docx" />',
         },
       ],
     },

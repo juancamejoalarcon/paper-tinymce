@@ -42,6 +42,15 @@ class Store {
       currentPage: this.currentPage,
     });
   }
+
+  createShadowRootContainer(selector: string): ShadowRoot {
+    const shadowEL = document.querySelector(selector).attachShadow({ mode: "open" });
+    this.setRootContainerEl(shadowEL);
+    const div = document.createElement("div");
+    div.id = "paper-editor-container";
+    this.rootContainerEl.appendChild(div);
+    return this.rootContainerEl
+  }
 }
 
 export const store = new Store();
