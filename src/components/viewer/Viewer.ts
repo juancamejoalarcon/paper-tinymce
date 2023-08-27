@@ -30,7 +30,22 @@ class ViewerClass {
   }
 
   cleanContent(html: string): string {
-    return html.replace(/(\r\n|\n|\r)/gm, "")
+    const info = html.match(
+      /(?<=\<papertinymceinfo>)([^;]*)(?=\<\/papertinymceinfo>)/g
+    );
+    if (info && info[0]) {
+      const paperInfo = JSON.parse(info[0]);
+      if (paperInfo?.pgMar) {
+        // store.updateGlobalMargins(paperInfo?.pgMar);
+        store.currentMargins = paperInfo?.pgMar
+      }
+    }
+
+    const newContent = html.replace(
+      /<papertinymceinfo>([^;]*)<\/papertinymceinfo>/g,
+      ""
+    );
+    return newContent.replace(/(\r\n|\n|\r)/gm, "")
   }
 
   createIframe(target: HTMLElement): HTMLIFrameElement {

@@ -13,7 +13,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:paper-tinymce && npm run build:viewer",
+    "build:paper-tinymce": "LIB='paper' vite build",
+    "build:viewer": "LIB='viewer' vite build",
     "test": "",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
