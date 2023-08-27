@@ -24,6 +24,7 @@ class PagesClass {
   // Body and document of iframe
   body: HTMLBodyElement;
   doc: Document;
+  win: Window = window
 
   // Root element
   root: HTMLElement; // pagesEl
@@ -48,6 +49,7 @@ class PagesClass {
 
     this.editor.on("keydown", (e) => {
       if (e.keyCode === 91 || e.keyCode === 17) return;
+      if (e.ctrlKey || e.metaKey) return;
 
       const firstPage = this.body.querySelector('#page-1');
       if (!firstPage) this.resetToBeforeInitalState()
@@ -109,9 +111,9 @@ class PagesClass {
     }, 0);
   }
 
-  setInitialState(): void {
-    this.body = this.editor.getBody() as HTMLBodyElement;
-    this.doc = this.editor.contentDocument;
+  setInitialState(body: HTMLBodyElement = null, doc: Document = null): void {
+    this.body = body || this.editor.getBody() as HTMLBodyElement;
+    this.doc = doc || this.editor.contentDocument;
 
     // Build root
     if (!this.doc.getElementById(this.rootId)) {
@@ -144,10 +146,10 @@ class PagesClass {
     };
   }
 
-  getAllNodesInEditor(): ChildNode[] {
+  getAllNodesInEditor(body: HTMLBodyElement = null, doc: Document = null): ChildNode[] {
     const nodes: ChildNode[] = [];
     if (!this.inited) {
-      this.setInitialState();
+      this.setInitialState(body, doc);
       this.body.childNodes.forEach((node: ChildNode) => {
         if (node.constructor.name === "Comment") return;
         if ((node as HTMLElement)?.id === this.rootId) return;
@@ -171,7 +173,7 @@ class PagesClass {
     let nodesToInsertInPage = [];
 
     nodes.forEach((node: ChildNode, index: number) => {
-      const heightOfNode = getOuterHeightOfElement(node as HTMLElement);
+      const heightOfNode = getOuterHeightOfElement(node as HTMLElement, this.win);
       const newHeight = acumulatedHeight + heightOfNode;
       if (newHeight > heightOfPage) {
         this.buildPage(currentPage, nodesToInsertInPage);

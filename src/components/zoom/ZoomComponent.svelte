@@ -25,8 +25,8 @@
 
   const setZoomInContainer = (): void => {
 
-    // rulerVertical.style.transform = `scale(1, ${1 + currentZoom})`;
-    // rulerVertical.style.transformOrigin = 'top';
+    // TODO: This should be done in the ruler component
+    if (!rulerVertical || !rulerHorizontal) return
     const rulerVerticalContent = rulerVertical.firstElementChild as HTMLDivElement;
     rulerVerticalContent.style.width = (29.7 * (1 + currentZoom)) + 'cm'
 
@@ -43,8 +43,10 @@
   };
 
   onMount(() => {
-    rulerVertical = store.rootContainerEl.querySelector(".ruler.vertical");
-    rulerHorizontal = store.rootContainerEl.querySelector(".ruler");
+    if (store.rootContainerEl) {
+      rulerVertical = store.rootContainerEl.querySelector(".ruler.vertical");
+      rulerHorizontal = store.rootContainerEl.querySelector(".ruler");
+    }
   });
 </script>
 

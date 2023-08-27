@@ -8,12 +8,10 @@
   import { Rulers } from '@/components/rulers/Rulers'
   import { Zoom } from '@/components/zoom/Zoom'
   import { Pages } from '@/components/pages/Pages'
-  import * as css from "./paper_styles.scss?inline";
-  import * as oxideContent from "@/assets/tinymce/skins/ui/oxide/content.css?inline";
-  import * as defaultContent from "@/assets/tinymce/skins/content/default/content.css?inline";
-  import * as oxideContentInline from "@/assets/tinymce/skins/ui/oxide/content.inline.css?inline";
   import { GlobalMethods } from "@/core/editor-global-methods";
-  import { getTinymceTemplateStyles } from '@/services/dependencies/styles'
+  import { getTinymceSkinStyles } from '@/services/dependencies/styles/skin';
+  import { getTinymceContentStyles } from '@/services/dependencies/styles/content';
+
 
   export let setEditor: any = () => {};
   export let options: any = {};
@@ -38,7 +36,7 @@
         Zoom.start(editor);
         Pages.start(editor);
       },
-      content_style: css.default + oxideContent.default + defaultContent.default + oxideContentInline.default,
+      content_style: getTinymceContentStyles(),
       skin: false,
       content_css: '',
       height: '100%',
@@ -49,7 +47,7 @@
 
   onMount(() => {
     let style = document.createElement("style");
-    style.textContent = getTinymceTemplateStyles()
+    style.textContent = getTinymceSkinStyles()
     store.rootContainerEl.appendChild(style);
     init();
   });
