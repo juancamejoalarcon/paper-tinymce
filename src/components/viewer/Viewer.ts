@@ -1,8 +1,10 @@
 import { getTinymceContentStyles } from '@/services/dependencies/styles/content';
 import ZoomComponent from '@/components/zoom/ZoomComponent.svelte';
-import{ store } from '@/core/store'
+import{ store } from '@/core/store';
  
 import { Pages } from "@/components/pages/Pages";
+
+import { downloadDocx } from '@/services/export/export.service'
 
 class ViewerClass {
 
@@ -25,6 +27,9 @@ class ViewerClass {
         this.buildPages();
         setTimeout(() => this.buildPages(), 200);
         Pages.applyZoom(this.currentZoom)
+      },
+      downloadDocx: () => {
+        downloadDocx(`<!DOCTYPE html>${this.doc.documentElement.outerHTML}`)
       }
     }
   }

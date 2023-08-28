@@ -16,6 +16,7 @@
       document.querySelector("#paper-tinymce-viewer-demo"),
       demo.default
     );
+    window.viewer = viewer
   });
 </script>
 

@@ -3,7 +3,7 @@
   import type { Editor, TinyMCE } from "tinymce";
   import { store } from "@/core/store" 
   import { getTinymceBasicConfig } from "@/services/tinymce-basic-config";
-  import { registerImportButton, getMenuOptions } from "@/services/menu/menu.service";
+  import { registerImportButton, registerExportButton, getMenuOptions } from "@/services/menu/menu.service";
   import { Highlight } from "@/services/highlight/highlight.service";
   import { Rulers } from '@/components/rulers/Rulers'
   import { Zoom } from '@/components/zoom/Zoom'
@@ -27,6 +27,7 @@
       setup: (editor) => {
         setEditor(editor)
         registerImportButton(editor);
+        registerExportButton(editor);
         GlobalMethods.start(editor);
         if (options.highlight === true) Highlight.start(editor);
       },

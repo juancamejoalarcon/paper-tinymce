@@ -21,3 +21,6 @@ export const DefaultMargins: Margins = {
 
 export const rulerWidthNumberOfPoints = 66;
 export const rulerHeightNumberOfPoints = 66;
+
+export const widthPoint = A4Dimensions.widthInPixes / rulerWidthNumberOfPoints;
+export const heightPoint = A4Dimensions.heightInPixels / rulerHeightNumberOfPoints;
