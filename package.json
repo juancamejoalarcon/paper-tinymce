@@ -37,6 +37,7 @@
     "@types/tinymce": "^4.6.5",
     "cheerio": "^1.0.0-rc.12",
     "html-to-docx": "^1.8.0",
+    "html2pdf.js": "^0.9.3",
     "jszip": "^3.10.1",
     "mammoth": "^1.6.0",
     "tinymce": "^6.6.2",

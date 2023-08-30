@@ -32,6 +32,13 @@ export const registerExportButton = (editor: Editor) => {
              onClickExportButton(editor)
           },
         },
+        {
+          type: "menuitem",
+          text: "PDF",
+          onAction: function () {
+             onClickExportButton(editor, 'pdf')
+          },
+        },
       ];
     },
   });

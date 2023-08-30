@@ -4,7 +4,8 @@ import{ store } from '@/core/store';
  
 import { Pages } from "@/components/pages/Pages";
 
-import { downloadDocx } from '@/services/export/export.service'
+import { downloadDocx } from '@/services/export/html-to-docx'
+import { downloadPdf } from '@/services/export/html-to-pdf'
 
 class ViewerClass {
 
@@ -29,8 +30,11 @@ class ViewerClass {
         Pages.applyZoom(this.currentZoom)
       },
       downloadDocx: () => {
-        downloadDocx(`<!DOCTYPE html>${this.doc.documentElement.outerHTML}`)
-      }
+        downloadDocx(this.doc)
+      },
+      downloadPdf: () => {
+        downloadPdf(this.doc)
+      },
     }
   }
 

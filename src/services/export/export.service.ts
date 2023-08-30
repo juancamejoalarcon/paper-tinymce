@@ -1,16 +1,12 @@
 import type { Editor } from "tinymce";
-import { transformHtmlToDocx } from './html-to-docx';
+import { downloadDocx } from "./html-to-docx";
+import { downloadPdf } from "./html-to-pdf"
 
-export const downloadDocx = (html: string) => {
-    transformHtmlToDocx(html).then((base64: string) => {
-        const downloadLink = document.createElement("a");
-        downloadLink.href = base64;
-        downloadLink.download = 'file.docx';
-        downloadLink.click();
-      })
-}
-
-export const onClickExportButton = (editor: Editor) => {
-  const htmlString = `<!DOCTYPE html>${editor.contentDocument.documentElement.outerHTML}`
-    downloadDocx(htmlString)
+export const onClickExportButton = (editor: Editor, type = "docx") => {
+  if (type === "pdf") {
+    downloadPdf(editor.contentDocument);
+    return;
+  }
+  downloadDocx(editor.contentDocument);
 };
+
