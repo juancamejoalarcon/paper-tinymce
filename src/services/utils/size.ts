@@ -7,3 +7,7 @@ export const getOuterHeightOfElement = (element: HTMLElement, win: Window = wind
     .map((side: any) => parseInt(style[`margin-${side}` as any]))
     .reduce((total, side) => total + side, height);
 };
+
+export const pixelsToMm = (x: number) => {
+  return ( x * 25.4 ) / 96
+}

@@ -2,10 +2,9 @@ import type { Editor } from "tinymce";
 import { copyEventListener } from "./CopyHandler";
 
 import {
-  DefaultMargins,
   A4Dimensions,
-  rulerWidthNumberOfPoints,
-  rulerHeightNumberOfPoints,
+  widthPoint,
+  heightPoint
 } from "@/core/dimensions";
 import { store } from '@/core/store'
 
@@ -32,8 +31,8 @@ class PagesClass {
   allPages: HTMLDivElement[] = [];
   currentPage = 1;
 
-  widthPoint = A4Dimensions.widthInPixes / rulerWidthNumberOfPoints;
-  heightPoint = A4Dimensions.heightInPixels / rulerHeightNumberOfPoints;
+  widthPoint = widthPoint;
+  heightPoint = heightPoint;
   currentZoom = 0;
 
   constructor() {}

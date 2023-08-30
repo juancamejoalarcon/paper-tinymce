@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import nodePolyfills from 'vite-plugin-node-stdlib-browser';
 
 
 const paperTinymceLib = {
@@ -31,7 +32,7 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [svelte({emitCss: false}), cssInjectedByJsPlugin()],
+  plugins: [svelte({emitCss: false}), cssInjectedByJsPlugin(), nodePolyfills()],
   build: {
     rollupOptions: {
       output: {
