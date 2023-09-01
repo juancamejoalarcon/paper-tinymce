@@ -269,6 +269,10 @@ class PagesClass {
     }
   }
 
+  getFirstPage(): HTMLElement | null {
+    return this.root?.querySelector('#page-1')
+  }
+
   getNumberOfPages(): number {
     return this.allPages.reduce(
       (accumulator, page) =>

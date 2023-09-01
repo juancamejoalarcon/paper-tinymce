@@ -42,6 +42,7 @@ class Ruler {
       target: divEl,
       props: {
         defaultMargin: store.currentMargins,
+        horizontal: !vertical,
         vertical,
         currentPage: 0,
         win: editor.iframeElement.contentWindow,

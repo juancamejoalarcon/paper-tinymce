@@ -3,6 +3,7 @@
 
   // export let defaultMargin: Margins = { top: 0, left: 0, bottom: 0, right: 0 };
   export let vertical: boolean = false;
+  export let horizontal: boolean = false;
   export let currentPage: number = 0;
   export let currentZoom: number = 0;
   export let win: Window;
@@ -200,7 +201,7 @@
   });
 </script>
 
-<div bind:this={container} class="ruler" class:vertical>
+<div bind:this={container} class="ruler" class:vertical class:horizontal>
   <div class="content">
     <div
       class="controls"

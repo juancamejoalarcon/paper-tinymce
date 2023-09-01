@@ -11,6 +11,7 @@
   import { GlobalMethods } from "@/core/editor-global-methods";
   import { getTinymceSkinStyles } from '@/services/dependencies/styles/skin';
   import { getTinymceContentStyles } from '@/services/dependencies/styles/content';
+  import { startResizeListener } from '@/services/resize/resize.service'
 
 
   export let setEditor: any = () => {};
@@ -36,6 +37,7 @@
         Rulers.start(editor);
         Zoom.start(editor);
         Pages.start(editor);
+        startResizeListener(editor)
       },
       content_style: getTinymceContentStyles(),
       skin: false,
