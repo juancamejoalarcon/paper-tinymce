@@ -41,6 +41,7 @@
     "jszip": "^3.10.1",
     "mammoth": "^1.6.0",
     "tinymce": "^6.6.2",
-    "vite-plugin-css-injected-by-js": "^3.3.0"
+    "vite-plugin-css-injected-by-js": "^3.3.0",
+    "xregexp": "^5.1.1"
   }
 }
