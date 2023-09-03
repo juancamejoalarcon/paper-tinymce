@@ -24,21 +24,14 @@ class HighlightClass {
     highlight() {
         const bookmark = this.editor.selection.getBookmark(2, true);
         let content = GlobalMethods.getContent();
-        const matches = XRegExp.matchRecursive(content, '(?<!<mark>)\\{%', '\\%}(?!<\/mark>)', 'gm', { unbalanced: 'skip' });
-        matches.forEach((match) => {
-
-            console.log(match)
-            // var re = new RegExp(`(?<!<mark>){%${match}%}`, "mi");
-
-            const name = XRegExp(match);
-
-            content = XRegExp.replace(content, `{%${match}%}`, `<mark>{%${match}%}</mark>`);
-            
-        })
         // Hghlight Logic
-        // content = content.replace(/(?<!<mark>){%([^}]+)%}/g, '<mark>{%$1%}</mark>');
+        XRegExp.matchRecursive(content, '(?<!<mark>)\\{%', '\\%}(?!<\/mark>)', 'gm', { unbalanced: 'skip' }).forEach((match) => {
+            content = XRegExp.replace(content, `{%${match}%}`, `<mark>{%${match}%}</mark>`);
+        })
         // Highlight IDs
-        // content = content.replace(/(?<!<mark>){{([^}]+)}}/g, '<mark>{{$1}}</mark>');
+        XRegExp.matchRecursive(content, '(?<!<mark>)\\{{', '\\}}(?!<\/mark>)', 'gm', { unbalanced: 'skip' }).forEach((match) => {
+            content = XRegExp.replace(content, `{{${match}}}`, `<mark>{{${match}}}</mark>`);
+        })
         
         this.editor.setContent(content);
         this.editor.selection.moveToBookmark(bookmark);
