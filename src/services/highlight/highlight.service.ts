@@ -15,7 +15,8 @@ class HighlightClass {
     setEvents() {
         const debouncedHighlight = Throttler.first(() => this.highlight(), 200);
         this.editor.on('keyup', (e) => {
-            if (e.keyCode === 91 || e.keyCode === 17) return;
+            if (e.key === "Dead") return
+            if (e.keyCode === 91 || e.keyCode === 17 || e.keyCode === 229) return;
             if (e.ctrlKey || e.metaKey) return;
             debouncedHighlight.throttle()
         });

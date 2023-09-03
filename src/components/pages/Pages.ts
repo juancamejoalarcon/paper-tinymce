@@ -47,7 +47,8 @@ class PagesClass {
     this.editor.on("Undo Redo ViewUpdate", this.build);
 
     this.editor.on("keydown", (e) => {
-      if (e.keyCode === 91 || e.keyCode === 17) return;
+      if (e.keyCode === 91 || e.keyCode === 17 || e.keyCode === 229) return;
+      if (e.key === 'Dead' ) return;
       if (e.ctrlKey || e.metaKey) return;
 
       const firstPage = this.body.querySelector('#page-1');
