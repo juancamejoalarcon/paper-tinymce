@@ -20,17 +20,23 @@ class HighlightClass {
             debouncedHighlight.throttle()
         });
     }
+    
+    escapeRegExp(str: string) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
 
     highlight() {
         const bookmark = this.editor.selection.getBookmark(2, true);
         let content = GlobalMethods.getContent();
         // Hghlight Logic
         XRegExp.matchRecursive(content, '(?<!<mark>)\\{%', '\\%}(?!<\/mark>)', 'gm', { unbalanced: 'skip' }).forEach((match) => {
-            content = XRegExp.replace(content, `{%${match}%}`, `<mark>{%${match}%}</mark>`);
+            const x = XRegExp(`(?<!<mark>){%${this.escapeRegExp(match)}%}`, 'g');
+            content = XRegExp.replace(content, x, `<mark>{%${match}%}</mark>`);
         })
         // Highlight IDs
         XRegExp.matchRecursive(content, '(?<!<mark>)\\{{', '\\}}(?!<\/mark>)', 'gm', { unbalanced: 'skip' }).forEach((match) => {
-            content = XRegExp.replace(content, `{{${match}}}`, `<mark>{{${match}}}</mark>`);
+            const x = XRegExp(`(?<!<mark>){{${this.escapeRegExp(match)}}}`, 'g');
+            content = XRegExp.replace(content, x, `<mark>{{${match}}}</mark>`);
         })
         
         this.editor.setContent(content);
