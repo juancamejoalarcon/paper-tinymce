@@ -1,0 +1,16 @@
+.tox-tinymce {
+  border: 1px solid #ccc;
+  border-radius: 0;
+}
+
+.tox-toolbar__primary {
+  background-position: center top 0px !important;
+}
+
+.tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+  border-right: 1px solid #ccc !important;
+}
+
+.tox:not(.tox-tinymce-inline) .tox-editor-header {
+  padding: 0px;
+}

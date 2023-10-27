@@ -1,0 +1,90 @@
+<papertinymceinfo>{"pgMar":{"top":6,"left":6,"bottom":6,"right":6}}</papertinymceinfo>
+<h2 style="text-align: center;" data-mce-style="text-align: center;">PODER ESPECIAL</h2>
+<p><br data-mce-bogus="1"></p>
+<p>Por medio de la presente,</p>
+<p >{% for p in numero_poderdantes %}</p>
+<p >{% if (p.poderdante == "una persona jurídica") %}</p>
+<p>{{ p.representante }}, mayor de edad, con {{ p.doc_representante }} núm. {{
+        p.dni_representante }}, y domicilio en {{ p.direccion_representante }}, en nombre y
+    representación de {{ p.denominacion_poderdante }}, con NIF/CIF núm. {{ p.cif_poderdante }}
+    y domicilio social en {{ p.domicilio_social }}, en su calidad de: {{ p.calidad_representante
+        }} en virtud del siguiente documento:&nbsp;{{ p.doc_representacion }},<br></p>
+<p >{% elseif (p.poderdante == "una persona física") %}</p>
+<p >{% if (p.nombre_concluido_n == "en su propio nombre y representación") %}
+</p>
+<div>{{ p.nombre_poderdante }}, mayor de edad, de nacionalidad: {{ p.nacionalidad_poderdante
+        }}, con {{ p.doc_poderdante }} núm. {{ p.dni_poderdante }} y domicilio en
+    {{ p.direccion_poderdante }},</div>
+<div><br data-mce-bogus="1"></div>
+<p >{% elseif (p.nombre_concluido_n == "por medio de un(a) representante legal (en caso
+        de ser menor de 18 años o incapacitado judicialmente) o voluntario/a") %}</p>
+<div><br data-mce-bogus="1"></div>
+<div>{{ p.representante }}, mayor de edad, con {{ p.doc_representante }} núm.{{
+        p.dni_representante }}, y domicilio en {{ p.direccion_representante }}, quien actúa, en
+    virtud de escritura pública y/o autorización pertinente, en calidad de: {{ p.calidad_representantef }}
+    y, por tanto, en nombre y representación de {{ p.nombre_poderdante }}, de nacionalidad: {{
+        p.nacionalidad_poderdante }}, con {{ p.doc_poderdante }} núm. {{ p.dni_poderdante
+        }} y domicilio en {{ p.direccion_poderdante }},</div>
+<p >{% endif %}</p>
+<p >{% endif %}</p>
+<p >{% endfor %}</p>
+<p><strong>OTORGA{% if (numero_poderdantes.length&nbsp; &gt; 1) %}N{% endif %} PODER ESPECIAL
+        A FAVOR DE</strong></p>
+<p>{% for c in numero_apoderados %}</p>
+<p><strong>&nbsp;{{ c.nombre_apoderado }},</strong> mayor de edad, con {{ c.doc_apoderado }}
+    núm. {{ c.dni_apoderado }} y domicilio en {{ c.domicilio_apoderado }},</p>
+<p>{% endfor %}</p>
+<p>para que<span class="ins">{% if (numero_apoderados.length&nbsp; &gt; 1) %}, cualquiera de ellos, de
+        forma indistinta y solidaria,{% endif %}</span>&nbsp;efectúe en su nombre y representación los
+    siguientes actos, y pueda ejecutar cuanto proceda a los efectos del ejercicio de este poder:<br></p>
+<p style="margin-left: 48.1031px; text-indent: 0.103078px;"
+    data-mce-style="margin-left: 48.1031px; text-indent: 0.103078px;">{{ motivo_poder }}</p>
+<p >{% if (nombrar_sustituto == 'No') %}</p>
+<p>En virtud de las reglas del Código civil, se prohíbe que {% if (numero_apoderados.length&nbsp; &gt; 1)
+        %} dichas personas nombren un sustituto; es decir, realicen {% else %} dicha persona nombre
+    un sustituto; es decir, realice {% endif %} una cesión de este poder o representación.</p>
+<p >{% endif %}</p>
+<p >{% if (duracion_poder == 'indefinida (hasta que se ejecuten todos los actos cuya
+        realización se autoriza al/los apoderados(s))') %}</p>
+<p>El presente apoderamiento tendrá vigencia a partir de la fecha de firma indicada a continuación.</p>
+<p>{% elseif (p.poderdante == "determinada (expirará en una fecha determinada, aunque algunos de dichos actos aún
+        no se hayan realizado)") %}</p>
+<p>En todo caso, el presente apoderamiento solo tendrá vigencia hasta el día {{ fecha_expiracion }}.
+    Después de esta fecha, dejará de tener efecto.</p>
+<p >{% endif %}</p>
+<p>En conformidad con lo expresado, firma el presente documento en&nbsp;{{ lugar_firma }}, a&nbsp;{{
+        fecha_firma }}.</p>
+<p>{% for p in numero_poderdantes %}</p>
+<div><br data-mce-bogus="1"></div>
+<div><br data-mce-bogus="1"></div>
+<div><br data-mce-bogus="1"></div>
+<div>.....................................................</div>
+<div>{% if (p.poderdante == "una persona jurídica") %}</div>
+<div><br data-mce-bogus="1"></div>
+<div>Firmado.&nbsp;{{ p.representante }} en nombre de {{ p.denominacion_poderdante }}</div>
+<div><br data-mce-bogus="1"></div>
+<div>{% elseif (p.poderdante == "una persona física") %}</div>
+<div><br data-mce-bogus="1"></div>
+<div>{% if (p.nombre_concluido_n == "en su propio nombre y representación") %}</div>
+<div><br data-mce-bogus="1"></div>
+<div>Firmado. {{ p.nombre_poderdante }}</div>
+<div><br data-mce-bogus="1"></div>
+<div>{% elseif (p.nombre_concluido_n == "por medio de un(a) representante legal (en caso de ser menor de 18 años o
+        incapacitado judicialmente) o voluntario/a") %}</div>
+<div><br data-mce-bogus="1"></div>
+<div>Firmado. {{ p.representante }} en&nbsp; nombre de {{ p.nombre_poderdante }}</div>
+<div><br data-mce-bogus="1"></div>
+<div>{% endif %}</div>
+<div><br data-mce-bogus="1"></div>
+<div>{% endif %}</div>
+<p>{% endfor %}<br></p>
+<p>{% if (numero_apoderados.length&nbsp; &lt;= 1) %}</p>
+<p>Acepto el poder conferido y respondo de la autenticidad de la firma precedente,</p>
+<p>{% else %}</p>
+<p>Aceptamos el poder conferido y respondemos de la autenticidad de la firma precedente,</p>
+<p>{% endif %}</p>
+<p>{% for c in numero_apoderados %}</p>
+<p><br data-mce-bogus="1"></p>
+<p>...............................................</p>
+<p>Firmado.&nbsp;{{ c.nombre_apoderado }}</p>
+<p>{% endfor %}</p>

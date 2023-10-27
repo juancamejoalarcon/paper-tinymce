@@ -1,6 +1,7 @@
 import type { Editor } from "tinymce";
 import type { Margins } from "./dimensions";
 import { DefaultMargins } from "./dimensions";
+import * as css from "@/shadow-dom-styles.scss?inline";
 
 class Store {
 
@@ -43,9 +44,16 @@ class Store {
     });
   }
 
+  applyStylesToShadow(shadowEl: ShadowRoot) {
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(css.default);
+    shadowEl.adoptedStyleSheets = [sheet];
+  }
+
   createShadowRootContainer(selector: string): ShadowRoot {
     const shadowEL = document.querySelector(selector).attachShadow({ mode: "open" });
     this.setRootContainerEl(shadowEL);
+    this.applyStylesToShadow(shadowEL);
     const div = document.createElement("div");
     div.id = "paper-editor-container";
     this.rootContainerEl.appendChild(div);

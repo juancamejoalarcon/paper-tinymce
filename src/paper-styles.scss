@@ -43,4 +43,12 @@
     flex-direction: column;
     background-color: white;
   }
+  .mark-color {
+    &-cyan {
+      background-color: cyan;
+    }
+    &-greenyellow {
+      background-color: greenyellow;
+    }
+  }
 }
