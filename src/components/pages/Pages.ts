@@ -152,6 +152,7 @@ class PagesClass {
       this.setInitialState(body, doc);
       this.body.childNodes.forEach((node: ChildNode) => {
         if (node.constructor.name === "Comment") return;
+        if (node.nodeName === "#text") return;
         if ((node as HTMLElement)?.id === this.rootId) return;
         // FIXME se debería ignorar también el pagesContainer
         nodes.push(node);

@@ -1595,7 +1595,7 @@ var ABt = yL((Dl, ib) => {
         const i = a.firstElementChild;
         n.push(...i.childNodes);
       }) : (this.setInitialState(t, r), this.body.childNodes.forEach((a) => {
-        a.constructor.name !== "Comment" && (a == null ? void 0 : a.id) !== this.rootId && n.push(a);
+        a.constructor.name !== "Comment" && a.nodeName !== "#text" && (a == null ? void 0 : a.id) !== this.rootId && n.push(a);
       })), n;
     }
     distributeNodesOnPages(t) {
